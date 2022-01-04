@@ -1,0 +1,63 @@
+---
+layout: post
+title:  "GSoC'20 - A summer full of optimization and Julia"
+date:   2020-08-23 14:00:00 -0500
+---
+
+
+# Latest updates on the work done. Post-GSoC tasks
+
+Hi all! This is the final blog in the series marking my progress in [Differentiable Optimization Problems](https://summerofcode.withgoogle.com/projects/#5232064888045568). You may enjoy:
+
+1. Reading [my first blog](http://www.imakshay.com/post/8).
+2. Checking the [code repository here](http://github.com/AKS1996/DiffOpt.jl).
+3. Reading the docs @ https://aks1996.github.io/DiffOpt.jl/dev/.
+
+### The project - progress
+Milestones completed:
+
+1. Using [MatrixOptInterface.jl](https://github.com/jump-dev/MatrixOptInterface.jl) as a dependency in DiffOpt.jl - [PR#37](https://github.com/AKS1996/DiffOpt.jl/pull/37)
+2. Fix MathOptSetDistances.jl dependency - [PR#35](https://github.com/AKS1996/DiffOpt.jl/pull/35)
+3. Support sparse structures in DiffOpt - [PR#47](https://github.com/AKS1996/DiffOpt.jl/pull/41).  The biggest bottleneck in inducing sparsity was matrix `A`; thanks to [@blegat](https://github.com/blegat), I drew inspiration from an [SCS.jl PR](https://github.com/jump-dev/SCS.jl/pull/192)
+4. Minor updates in converting MOI model to [MatrixOptInterface.jl](https://github.com/jump-dev/MatrixOptInterface.jl) model - [PR#7](https://github.com/jump-dev/MatrixOptInterface.jl/pull/7)
+5. Updated docs with manual and examples
+
+
+## What do we mean by differentiating a program? 
+For a primer on differentiable optimization, refer to [the introduction page](https://aks1996.github.io/DiffOpt.jl/dev/intro/) in the documentation or this [TF Dev Summit'20 video](https://www.youtube.com/watch?v=NrcaNnEXkT8&t=37s).
+
+## What have we achieved? How can you use it?
+As of now, one can differentiate:
+
+- convex conic programs (with linear objectives), and
+- convex quadratic programs (with affine constraints)
+
+
+written in MOI, and the theoretical models rely, respectively, on:
+
+- [Differentiating Through a Cone Program](https://arxiv.org/abs/1904.09043) - Akshay Agrawal, Shane Barratt, Stephen Boyd, Enzo Busseti, Walaa M. Moursi, 2019
+- [OptNet: Differentiable Optimization as a Layer in Neural Networks](https://arxiv.org/abs/1703.00443) = Brandon Amos and J. Zico Kolter, 2017
+
+I've included some examples (for both the methods) in the documentation, plus plenty of examples (with reference CVXPY code) in [the tests folder](https://github.com/AKS1996/DiffOpt.jl/blob/master/test/MOI_wrapper.jl). For a primer on matrix inversion, I would [suggest this example](https://aks1996.github.io/DiffOpt.jl/dev/matrix-inversion-manual/). If you face any problem, feel free to [create an issue](https://github.com/AKS1996/DiffOpt.jl/issues).
+
+
+## Post-GSoC improvements
+Although we've almost approached the last week for GSoC, I'll make sure to improve on the following things post-GSoC too.
+
+1. Making the code independent of SCS.jl ([Issue#38](https://github.com/AKS1996/DiffOpt.jl/issues/38)) - although we did resolve SCS specific code in MatrixOptInterface.jl, but some part of differentiation still relies on SCS specific code. Removing this dependency should generalize differentiation to any available conic solver
+2. Derivative in terms of ChainRules.jl - this is one of the foremost suggestions by [@matbesancon](https://github.com/matbesancon); although we couldn't include AD in GSOC timeline well, we've begun discussion with [ChainRules.jl](https://github.com/JuliaDiff/ChainRules.jl) community
+3. Time benchmarking - it'll be really cool to make DiffOpt.jl fast. Started a beginner PR to profile computation time - [PR#40](https://github.com/AKS1996/DiffOpt.jl/pull/40)
+4. From MOI to JuMP - since the code is already working with MOI backend, it shouldn't be hard to differentiate JuMP models too. I'll be interested in improving the interface and API usage using JuMP
+5. Many specific improvements in MODistances.jl and MatrixOptInterface.jl
+
+
+## Final thoughts
+I had a really good experience with the GSoC project. As I've already mentioned in my previous blog, the JuMP developer community is indeed welcoming and helpful. 
+
+> A shoutout to Julia project maintainers, JuMP developer community, and my mentors!!
+
+It wouldn't be wrong to say that at times I was confused with how to make an effective segue from optimization theory to working models. We've been able to develop the codebase because of the biweekly GSoC standups, the JuMP developer call, numerous issues/PR discussions, and slack threads.
+
+> 100+ commits, 20+ PRs and 3000+ lines of code and counting
+
+Finally, I would like to thank Google Summer of Code team for providing us this great learning opportunity amidst the COVID pandemic. 

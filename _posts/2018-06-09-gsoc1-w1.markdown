@@ -1,0 +1,60 @@
+---
+layout: post
+title:  "GSoC first few weeks"
+date:   2018-06-09 14:00:00 -0500
+---
+
+
+# Starting GSoC, hello ViSP, creating android platform and java module
+
+![VISP Logo](https://visp.inria.fr/files/2015/12/bandeauViSP.png)
+
+Google announced the results of GSoC 2018 on 23rd April. Desparately pinging the website till 9'o clock at evening, I got to know about the results and I am happy to share that my proposal was among many projects selected. I will be working on [Porting ViSP to Android devices](https://github.com/lagadic/visp/wiki/GSoC_2018#project-2-porting-visp-to-android-devices) with [ViSP, Inria](https://visp.inria.fr/). You can find my project’s [description here](https://summerofcode.withgoogle.com/projects/#6312239250800640).  
+
+I would like to thank [Divesh Pandey](https://github.com/pandeydivesh15), one of my seniors and [GSoC'17](https://summerofcode.withgoogle.com/archive/2017/projects/4582190549565440/) student at Red Hen Lab, who introduced me to GSoC and helped me whenever I asked for, while submitting the proposal. For next 12 weeks, I'll be collaborating with my mentors [Fabien Spindler](https://github.com/fspindle) and [Souriya Trinh](https://github.com/s-trinh) at [Inria](https://inria.fr/), France. 
+
+
+## Project Brief
+
+ViSP is already packaged for iOS. The objective of my project is to propose to the ViSP community an SDK for Android and a set of tutorials for beginners. 
+
+#### Community Bonding Period
+    1. Discuss the project with mentors in detail, considering the need of a new camera framework
+    2. Study OpenCV4Android SDK in detail
+    3. Building ViSP library using NDK
+
+#### May 14 - June 8, 2018
+    1. Imgproc module demo in android
+    2.  vpAprilTag demo in real time
+
+#### June 18 - July 6, 2018
+    1. Optimizing existing ViSP source code for larger device coverage and lag-free real time experience
+    2. Wrapper  JNI/ Java code for native  C++ functions as a module named visp_java
+    3. ViSP 3rd party library support like Eigen, OpenCV
+
+#### July 16 - August 6, 2018
+    1. Complete Doxygen documentation 
+    2. Tutorial and demos 
+    4. Sample executables(apk’s)
+    5. Support bug tracking and submission
+
+## Community Bonding Period
+I got familiar with the ViSP Tech Stack well before submitting the proposal. It was like the basics of development - [install the software](http://visp-doc.inria.fr/doxygen/visp-daily/index.html#tuto_install_src) on your PC, going through the [tutorials and demos](http://visp-doc.inria.fr/doxygen/visp-daily/index.html#tutorial) and getting familiar with the code structure(I made a [separate repo](https://github.com/AKS1996/GSOC-Prep) for this :D ). During the Community Bonding Period, we discussed a few important things like how OpenCV handles its Android platform and all. Just before the first week, I successful built visp using Android NDK(get the [code here](https://github.com/AKS1996/GSOC-Prep/tree/master/BuildVispAndroid)).
+
+## First week - Demo time!!
+Since I got the build ready, I jumped to making some android apps(get the [apps here](https://github.com/AKS1996/GSOC-Prep/tree/master/VispAndroidDemoApp)) showing basics of `vpAprilTag` detection(a simple BW marker, useful for a wide variety of tasks including augmented reality, robotics, and camera calibration). The app worked well on latest android versions with reasonable detection time, using 4 threads on `640x480` sized greyscale images. But it lacked image processing and augmenting capabilites, which I worked on next.
+
+[![Demo April Tag Detection](https://img.youtube.com/vi/DIqEP6feL3I/0.jpg)](https://www.youtube.com/watch?v=DIqEP6feL3I)
+
+
+## Second Week
+Soon I switched onto a new PR [#323](https://github.com/lagadic/visp/pull/323). Instead of focusing on the android platform, I worked on developing the Java module. Its better in a way that Java module can be tested on a desktop too and if sucessfully built, I'll need to make a few changes only to make it running on Android.  
+
+But dev's not that easy ;)  
+
+We're working with JNI not Java, CMake not C++. There are no debuggers for both, so `printf` and `message("Code reached here")` become your buddies. Unlike traditional code, we're working on build scripts - so every failed build means following along the code to track what's creating the issue and then waiting for the next build to finish. Neverthless, I added scripts to detect `Ant`(Java command line tool to build files as targets) and Python SDK. Python is used to parse the C++ header files and generate JNI and Java code for it(refer this excellent [opencv doc](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_bindings/py_bindings_basics/py_bindings_basics.html) for more). `Ant` is used to generate classes from java file and compile it into a jar.
+
+
+## What's next?
+As my mentors adviced, next few weeks I'll try to develop the `visp_java` module first and the android platform later. That way I can resolve issues better and track down their source, either `JNI` or Android architecture/platform itself.
+

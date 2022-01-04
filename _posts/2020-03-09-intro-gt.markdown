@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "Introductory workshop on Game Theory @ IIT Varanasi"
+date:   2020-03-09 14:00:00 -0500
+---
+
+# Introductory workshop on Game Theory @ IIT Varanasi
+
+<p style="text-align: center">
+    <em>
+        <a href="https://ncase.me/trust/">Evolution of trust</a>,
+        a great interactive game theoretic simulation
+    </em>
+</p>
+
+Last weekend, I conducted an introductory workshop on Game Theory @ IIT Varanasi. It was primarily aimed for freshers 
+and newbies to Game Theory. 
+
+### What was covered?
+We covered basic topics such as elements of a game, IESDS and the concept of equilibrium. We discussed several classical
+games alongwith many contemporary applications of Game Theory.
+
+
+### Access to content
+You can find the [workshop slides here](https://docs.google.com/presentation/d/1ykB_wYPM63-z701hWx2JWvW5JNg99nOEzkn9CZPa4Fs/edit?usp=sharing).

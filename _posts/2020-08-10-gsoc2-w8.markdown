@@ -1,0 +1,28 @@
+---
+layout: post
+title:  "GSoC'20 - Create Dependencies and Documentation"
+date:   2020-08-10 14:00:00 -0500
+---
+
+
+# Move DiffOpt.jl code to other JuMP-dev packages; Begin documenting the code
+
+Hi all! This blog is one of a series marking my progress in [Differentiable Optimization Problems](https://summerofcode.withgoogle.com/projects/#5232064888045568). You may enjoy reading [my first blog](http://www.imakshay.com/post/8). 
+
+### The project - progress
+Milestones completed:
+1. Adding projections on cones and their derivatives to [MathOptSetDistances.jl](https://github.com/matbesancon/MathOptSetDistances.jl) ([PR#5](https://github.com/matbesancon/MathOptSetDistances.jl/pull/5)) and using it as a dependency in DiffOpt.jl ([PR#35](https://github.com/AKS1996/DiffOpt.jl/pull/35))
+2. Moving the matrix builder code to [MatrixOptInterface.jl](https://github.com/jump-dev/MatrixOptInterface.jl) - [PR#7](https://github.com/jump-dev/MatrixOptInterface.jl/pull/7)
+3. Initial version of documentation - https://aks1996.github.io/DiffOpt.jl/dev/
+
+> Minor contribution ([PR#1098](https://github.com/jump-dev/MathOptInterface.jl/pull/1132)) in JuMP Development Sprint :)
+
+
+## What's next?
+Finaly we arrive at the last two weeks of the summer program. We'll focus on
+1. Supporting sparse structures to speed up computations - [Issue#31](https://github.com/AKS1996/DiffOpt.jl/issues/31)
+2. Comprehensively document the codebase developed
+
+
+### Staying in touch
+If you're interested in knowing more about the project, join the `#opt-diff-gsoc` channel on [julia slack](https://discourse.julialang.org/t/announcing-a-julia-slack/4866).

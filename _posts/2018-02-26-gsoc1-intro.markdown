@@ -1,0 +1,42 @@
+---
+layout: post
+title:  "Getting Started with GSoC"
+date:   2018-02-26 14:00:00 -0500
+---
+
+
+# What's GSoC? How do I apply for it?
+
+![GSOC Image](https://cdn-images-1.medium.com/max/600/1*ZcNmNPNXGg_iOyklYUbl-w.png)
+
+## Whats GSOC?
+The Google Summer of Code(abbreviated as **GSoC**) is an international program in which Google provides university students an opportunity to work on a free and open-source software coding project during the summer. All students who successfully complete the project are [awarded stipends](https://developers.google.com/open-source/gsoc/help/student-stipends).
+
+## Why GSOC?
+GSoC is a really good oppurtunity to learn and collaborate with international open source organizations. The projects that are covered will denifinitly improve your knowledge base and you'll get an in-depth knowledge of a very specific field. You get to learn a lot of softwares and tech stack which you weren’t acquainted to before. The entire process from selection to
+successful completion will demand the best of you and your learning curve will take the steepest ascents during it.
+
+## Before you apply
+I wont tell you how to apply for GSoC, there are many good articles out there(I read [this one](https://danielpocock.com/getting-selected-for-google-summer-of-code-2016)). Instead I can help you narrow your search before you apply. Try to consider the following:
+
+- **Installing Linux**: I can't stress this point more. GSoC is fundamentally about free software. You can code and develop on Windows,	but have a look around! I'm sure you'll find that most GSoC applicants work on some flavor of Linux. Make sure you're on one.
+> Linux is to free software what a tree is to the forest.
+
+- **Get acquainted with Github**: Indeed, [Github](http://github.com) is where code happens. For twelve weeks, you'll need to contribute code to an organization. Although there are alternatives to Github(like bitbucket, gitabs), most organizations use it to host/share their code and manage versioning. If you're a beginner at it, create an account and refer [this article](https://github.com/COPS-IITBHU/hello-cops) to start. 
+
+- **Finding Your Interests**: Usually, people are interested about things on which they spend most of their time. After getting basic knowledge of programming, which fields intrigued you. It might be something as easy like web, android, ios or dekstop applications that involve direct interactions with users. Maybe you enjoyed creating programs related to finance, stats, or any other applied maths field. GSoC is a twelve week feat - you can't work on problems that don't engage you. And there will be a lot of hard problems to solve
+> You must enjoy what you're working on.
+
+- **Curating an organization list**: Visit the [GSoC website](http://summerofcode.withgoogle.com) and have a look at participating organizations. Google out a few things: What's the organization all about? What does it specializes in? What were their past GSoC projects(if any)? Do you find their projects interesting? This way you can get an estimate of possible orgs you'll be applying to. Note that it takes time and effort to do such research. It's not natural at all and you've to deliberately dig up the details. I found it pretty hard as a first step. If not months,take at least few weeks to know about orgs, preferably before February.
+
+## Next steps
+After following above steps, you go into the org-specific mode.
+
++ **Get in touch**: Join the organization's community, if any. They might be using IRC, Slack, Google Groups or some other medium of communication. 
++ **Explore developer profiles**: Github makes it easy to see what projects a developer has contributed to. Get familiar with their contribution to the org. As a demo, browse through [my own Github profile](https://github.com/AKS1996/) or [my mentor's](https://github.com/fspindle).
++ **Find past projects**: Have a look at their past projects. Try to get a sense of what's the project about and what development is currently going on in the org. A few orgs publish their projects before hand. Have a look at them too.
++ **Get Involved**: Start developing and contributing! I was excited while I began to take part in my orgs conversation. Install their software on your device. Read their documentation. Look at their issues and try to understand those tagged `good first issue` or `help wanted`. Read their contributing guidelines. Even the smallest contributions are welcomed(have a look at [my first PR](https://github.com/JuliaIntervals/IntervalArithmetic.jl/pull/91)).
+
+## What's next?
+As I mentioned, the first step is the hardest. You've to get the rock rolling down the hill. If you're able to follow the above steps, then your should aim to select at max 3 organizations for your proposals. If you face any problem, feel free to ask. If you found the article helpful, ping me or leave comments.
+

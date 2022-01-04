@@ -1,0 +1,45 @@
+---
+layout: post
+title:  "GSoC Week 3"
+date:   2018-06-16 14:00:00 -0500
+---
+
+
+# Adding java wrapping support to visp_core, visp_imgproc and visp_io modules
+![Java Warpping Image](https://i.stack.imgur.com/BsKbq.png)
+
+Last week I completed building `visp_java` module clean. Although there were no errors, yet the libraries were not compiling(demangling showed missing symbols). Instead of dubgging it, I focused on wrapping a few files manually and create a demo or something, at least for `core` and `imgproc` modules
+
+## Week 3 Progress
+
++ Manually wrapping a few core classes like `VpMarix`, `VpColVector`, `VpImage`
++ Resolution of `VpImage` into `VpImageRGBa` and `VpImageUChar`
++ Wrappers for `gui` and `io` modules(a few classes only)
++ Basic `core` and `imgproc` demos
+
+
+## Why do we need manual wrapping?
+The script [gen_java.py](https://github.com/AKS1996/visp/blob/java_module/modules/java/generator/gen_java.py) can turn only a few c++ declarations to native java calls. Consider a C++ header file containing some functions, enums and operator declarations. Functions follow regex semantics, so they can be turned to Java functions. Enums can be turned to `public static final int` or something. But java doesn't support operators for custom classes.  
+A possible workaround is to identify operator declarations for a class and replace them by manually written Java snippets. An alternative is to ignore the whole class while parsing and manually wrap it. Its a good choice if that class belongs to core of your tech stack(like `Mat` to `opencv`) and supports host of operators.  
+
+## Why can't matrices or images support generic data types?
+We're dealing with JNI, not just Java. Java can support generics, but there are very poor workarounds by which JNI can interpret them. Take `opencv_java` module as reference: they suport a host of `Mat` data types(`MatofByte`, `MatofFloat`, etc). And generating such classes ain't difficult. All you need is a single loop iterating over supported data types - `byte`, `int`, `float`, `double`, etc. 
+
+
+## What problems does wrapping GUI presents?
+GUI is a totally different deal for C++ and Java. I can't make a call to a Qt console or window via JNI, it always gives some threading error. Java `Swing` is an alternative for simple GUI - and I think I need to adapt a few classes in `visp_gui` module in order to support Swing integration. But I don't think its worth the effort. Since mostly android developers will be using `visp_java` module, it'll be better adapt GUI for android(using `ImageView` etc).
+
+
+## Demo Time
+I've created a few[demo Eclipse projects](https://github.com/AKS1996/GSOC-Prep/tree/simple_graphics/visp-java-demos) showing sample class usage. Since the automatic building ain't working, you'll need to refer to [this repo](https://github.com/AKS1996/GSOC-Prep/tree/simple_graphics/JNI-Usage-Example) for generating the java module manually(with limited features). Just hit the `run.sh` and follow the prompts. That'll create two files - `visp_java320.jar` and `libvisp_java320.so` - which you'll need to include in the Eclipse demo's(like opencv does [here](http://opencv-java-tutorials.readthedocs.io/en/latest/01-installing-opencv-for-java.html)).
+
+
+## What's next?
+During Week 4, 
+
++ I'll edit build scripts to incorporate building CTests. I should've caught that issue early on. I'll try to do a `git-bisect` with a custom test script and see where the ctests fail. 
++ I'll try to maintain list of ignored operator functions in some json file with their corresponding Java code
++ I need to resolve the missing symbols issue in `libvisp_java320.so`. I better stop adding java support for other classes until this resolves(the PR is getting big :D)
+
+I think its better to add test functions now. Need to check whether the same parser can parse test functions in respective modules. Else might need to adapt `gen_java.py` script(or create a separate script for simplicity).
+
