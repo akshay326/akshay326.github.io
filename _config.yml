@@ -30,7 +30,7 @@ twitter_username: akshay326_
 github_username:  akshay326
 
 # Build settings
-theme: minima
+theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
 
