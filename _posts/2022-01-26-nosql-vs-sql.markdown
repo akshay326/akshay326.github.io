@@ -19,3 +19,9 @@ Vertical scaling refers to manipulating resources (compute, storage, etc) built 
 Consider a hypothetical social media company that has a SQL database worth ~100GB in size (on RAM) stored on cloud, say an EC2 instance. If the platform suddenly experienced a ten-fold increase in traffic, it would require increasing the RAM of EC2 instance to 1TB roughly (or a lower value if platform developers come up with a way to optimize database schema in real-time). This might be a costly operation considering that a typical platform with over a million users can garner databases in petabytes!
 
 On the other hand, if the company had a NoSQL database of the same size and experienced a ten-fold increase in traffic, it would require adding nine more EC2 instances with similar instances, orchestrated by Kubernetes or AWS Fargate.
+
+
+## References
+- https://blog.teamtreehouse.com/should-you-go-beyond-relational-databases
+- http://nickcraver.com/blog/2013/11/22/what-it-takes-to-run-stack-overflow
+- http://highscalability.com/blog/2010/12/6/what-the-heck-are-you-actually-using-nosql-for.html
