@@ -1,56 +1,76 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you: 
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-
-title: Akshay Sharma
-email: as6429@columbia.edu
-description: >- # this means to ignore newlines until "baseurl:"
-  Welcome to Akshay Sharma's personal blog. Here you will find my
-  publications, resume, posts/blogs. You can review my open source 
-  contributions, follow my twitter handle, and get my book reading updates. 
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: akshay326_
-github_username:  akshay326
-linkedin_username: akshay326
-
-# Build settings
-theme: minima
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+
+minimal_mistakes_skin    : "default" 
+title                    : "Akshay Sharma"
+name                     : "Akshay Sharma"
+description              : >- # this means to ignore newlines until "baseurl:"
+  Welcome to Akshay Sharma's personal blog. Here you will find my
+  publications, resume, posts/blogs. You can review my open source 
+  contributions, follow my twitter handle, and get my book reading updates. 
+url                      : "https://akshay326.github.io"
+baseurl                  : ""
+teaser                   : "/assets/images/dp.jpg"
+search                   : true
+search_full_content      : true # true, false (default)
+search_provider          : "lunr"
+lunr:
+  search_within_pages    : true
+
+
+# Site Author
+author:
+  name             : "Akshay Sharma"
+  avatar           : "/assets/images/dp.jpg"
+  bio              : "NLP @ Klarity.ai -- CS @ Columbia"
+  location         : "San Francisco"
+  links:
+    - label: "Book A Call"
+      icon: "fas fa-fw fa-link"
+      url: "https://topmate.io/akshay_326"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/akshay326_"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/akshay326"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/akshay326"
+
+
+# Site Footer
+footer:
+  links:
+    - label: "Book A Call"
+      icon: "fas fa-fw fa-link"
+      url: "https://topmate.io/akshay_326"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/akshay326_"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/akshay326"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/akshay326"
+
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
