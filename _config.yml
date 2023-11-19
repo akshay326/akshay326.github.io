@@ -20,6 +20,7 @@ search_full_content      : true # true, false (default)
 search_provider          : "lunr"
 lunr:
   search_within_pages    : true
+repository               : akshay326/akshay326.github.io
 
 
 # Site Author
