@@ -1,7 +1,7 @@
 ---
 title: TLDR AI Demo - Calculator
 permalink: /tldrai-demo
-layout: page
+layout: single
 ---
 
 <head>
