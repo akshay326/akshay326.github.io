@@ -5,7 +5,7 @@ layout: single
 ---
 
 <head>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/assets/js/tailwind.js"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white shadow-xl rounded-lg p-8">

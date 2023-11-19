@@ -12,7 +12,7 @@ description              : >- # this means to ignore newlines until "baseurl:"
   Welcome to Akshay Sharma's personal blog. Here you will find my
   publications, resume, posts/blogs. You can review my open source 
   contributions, follow my twitter handle, and get my book reading updates. 
-url                      : "https://akshay326.github.io"
+url                      : "https://akshay326.com"
 baseurl                  : ""
 teaser                   : "/assets/images/dp.jpg"
 search                   : true
