@@ -1,6 +1,6 @@
 ---
 title: TLDR AI Demo - Calculator
-permalink: /tldrai-demo
+permalink: /tldrai-demo.html
 layout: single
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Bookreads
-permalink: /bookreads
+permalink: /bookreads.html
 ---
 
 <script src="https://www.goodreads.com/review/grid_widget/96697553.Books%20I've%20Read?cover_size=medium&hide_link=&hide_title=&num_books=30&order=a&shelf=read&sort=date_added&widget_id=1627567641"></script>
