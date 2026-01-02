@@ -1,3 +1,9 @@
+---
+layout: post
+title: "Fine-tuning Microsoft's Phi-2 Machine Learning Model with DPO"
+date: 2024-01-23 10:00:00 -0500
+---
+
 # Fine-tuning Microsoft's Phi-2 Machine Learning Model with DPO
 
 ### Introduction

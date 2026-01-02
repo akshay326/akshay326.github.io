@@ -27,7 +27,7 @@ repository               : akshay326/akshay326.github.io
 author:
   name             : "Akshay Sharma"
   avatar           : "/assets/images/dp.jpg"
-  bio              : "Builder & Writer"
+  bio              : "Co-founder at getseer.dev. Previously: rimba.ai, klarity.ai"
   location         : "San Francisco"
   links:
     - label: "Twitter"
@@ -64,6 +64,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
+      show_date: true
   - scope:
       path: ""
       type: posts
@@ -71,3 +72,4 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
+      show_date: true
