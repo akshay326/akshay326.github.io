@@ -27,12 +27,9 @@ repository               : akshay326/akshay326.github.io
 author:
   name             : "Akshay Sharma"
   avatar           : "/assets/images/dp.jpg"
-  bio              : "NLP @ Klarity.ai -- CS @ Columbia"
+  bio              : "Builder & Writer"
   location         : "San Francisco"
   links:
-    - label: "Book A Call"
-      icon: "fas fa-fw fa-link"
-      url: "https://topmate.io/akshay_326"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/akshay326_"
@@ -47,9 +44,6 @@ author:
 # Site Footer
 footer:
   links:
-    - label: "Book A Call"
-      icon: "fas fa-fw fa-link"
-      url: "https://topmate.io/akshay_326"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/akshay326_"
