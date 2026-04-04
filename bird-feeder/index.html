@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When Do Birds Show Up at My Home?</title>
+  <meta name="description" content="$80 in hardware. 37 cents of AI. 1,500 photos. 433 birds. One answer.">
+  <meta property="og:title" content="When Do Birds Show Up at My Home?">
+  <meta property="og:description" content="I pointed a $22 webcam at my bird feeder for 3 days and used AI to count every bird. Here's what I found.">
+  <meta property="og:image" content="https://ykshjpattjylxntrpzbe.supabase.co/storage/v1/object/public/birdfeeder/public/2026-03-31_12-08-11.jpg">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When Do Birds Show Up at My Home?">
+  <meta name="twitter:description" content="$80 hardware. $0.37 AI. 433 birds. One answer.">
+  <meta name="twitter:image" content="https://ykshjpattjylxntrpzbe.supabase.co/storage/v1/object/public/birdfeeder/public/2026-03-31_12-08-11.jpg">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.7/Recharts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: #111827;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.875em; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+    .wrap-wide { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+
+    header { padding: 80px 24px 48px; text-align: center; max-width: 640px; margin: 0 auto; }
+    header h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    header p { font-size: 1.125rem; color: #6b7280; line-height: 1.6; }
+    header .byline { font-size: 0.875rem; color: #9ca3af; margin-top: 16px; }
+
+    .hero-img { margin-bottom: 64px; }
+    .hero-img img { border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .hero-img .caption { text-align: center; font-size: 0.8125rem; color: #9ca3af; margin-top: 12px; font-style: italic; }
+
+    section { margin-bottom: 64px; }
+    section h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; }
+    section p { font-size: 1.125rem; line-height: 1.75; color: #374151; margin-bottom: 16px; }
+    section p:last-child { margin-bottom: 0; }
+
+    .answer-box { background: #f9fafb; border-radius: 12px; padding: 32px; margin-bottom: 24px; }
+    .answer-box .big { font-family: system-ui, sans-serif; font-size: 3rem; font-weight: 700; color: #111827; }
+    .answer-box .sub { color: #6b7280; font-size: 0.875rem; margin-top: 4px; }
+
+    .chart-container { height: 220px; margin: 0 -8px; }
+
+    .species-list { font-family: system-ui, sans-serif; }
+    .species-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .species-name { font-size: 0.875rem; color: #6b7280; width: 160px; flex-shrink: 0; }
+    .species-bar-bg { flex: 1; height: 8px; background: #f3f4f6; border-radius: 999px; overflow: hidden; }
+    .species-bar { height: 100%; background: #111827; border-radius: 999px; }
+    .species-n { font-size: 0.875rem; color: #9ca3af; width: 32px; text-align: right; font-variant-numeric: tabular-nums; }
+
+    .gallery-item { margin-bottom: 40px; }
+    .gallery-item img { width: 100%; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+    .gallery-meta { max-width: 640px; margin: 12px auto 0; display: flex; justify-content: space-between; gap: 16px; }
+    .gallery-meta .desc { font-size: 0.875rem; color: #4b5563; }
+    .gallery-meta .time { font-size: 0.75rem; color: #9ca3af; white-space: nowrap; flex-shrink: 0; }
+
+    .bom-table { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; font-family: system-ui, sans-serif; }
+    .bom-row { display: flex; justify-content: space-between; padding: 12px 16px; font-size: 0.875rem; border-bottom: 1px solid #f3f4f6; }
+    .bom-row:last-child { border-bottom: none; }
+    .bom-row .item { color: #374151; }
+    .bom-row .price { color: #111827; font-weight: 500; font-variant-numeric: tabular-nums; }
+    .bom-row .price.free { color: #9ca3af; font-weight: 400; }
+    .bom-total { display: flex; justify-content: space-between; padding: 12px 16px; font-size: 0.875rem; background: #f9fafb; border-top: 1px solid #e5e7eb; }
+    .bom-total .item { font-weight: 600; }
+    .bom-total .price { font-weight: 700; }
+
+    .numbers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-family: system-ui, sans-serif; }
+    .number-cell { text-align: center; padding: 16px 0; }
+    .number-cell .n { font-size: 1.5rem; font-weight: 700; color: #111827; }
+    .number-cell .label { font-size: 0.75rem; color: #9ca3af; margin-top: 4px; }
+
+    .scale-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: #f9fafb; border-radius: 12px; padding: 24px; font-family: system-ui, sans-serif; text-align: center; }
+    .scale-grid .n { font-size: 1.25rem; font-weight: 700; }
+    .scale-grid .label { font-size: 0.75rem; color: #9ca3af; }
+
+    .closing { border-bottom: 1px solid #f3f4f6; padding-bottom: 64px; }
+
+    footer { padding: 48px 0 64px; text-align: center; }
+    footer p { font-size: 0.8125rem; color: #9ca3af; margin-bottom: 4px; }
+
+    @media (max-width: 640px) {
+      header h1 { font-size: 1.875rem; }
+      header { padding-top: 48px; }
+      .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+      .species-name { width: 120px; }
+      .gallery-meta { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState } = React;
+const { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area, CartesianGrid, Cell } = Recharts;
+
+const SB = "https://ykshjpattjylxntrpzbe.supabase.co/storage/v1/object/public/birdfeeder/public";
+
+const HOURLY = [
+  { h: "12a", b: 0 }, { h: "1", b: 0 }, { h: "2", b: 0 }, { h: "3", b: 0 },
+  { h: "4", b: 0 }, { h: "5", b: 0 }, { h: "6", b: 0 }, { h: "7", b: 0 },
+  { h: "8", b: 0 }, { h: "9a", b: 1 }, { h: "10", b: 54 }, { h: "11", b: 35 },
+  { h: "12p", b: 50 }, { h: "1p", b: 61 }, { h: "2p", b: 59 }, { h: "3p", b: 86 },
+  { h: "4p", b: 40 }, { h: "5p", b: 9 }, { h: "6p", b: 36 }, { h: "7p", b: 0 },
+  { h: "8p", b: 0 }, { h: "9p", b: 2 }, { h: "10p", b: 0 }, { h: "11p", b: 0 },
+];
+
+const DAILY = [
+  { day: "Mar 29", birds: 55 },
+  { day: "Mar 30", birds: 51 },
+  { day: "Mar 31", birds: 327 },
+];
+
+const GALLERY = [
+  {
+    file: "2026-03-31_12-08-11.jpg",
+    desc: "Five sparrows on the railing — the single busiest frame in 1,500 images",
+    time: "Mar 31, 12:08 PM",
+  },
+  {
+    file: "2026-03-31_13-34-37.jpg",
+    desc: "Three House Finches up close. You can see the red head on the right.",
+    time: "Mar 31, 1:34 PM",
+  },
+  {
+    file: "2026-03-29_14-22-14.jpg",
+    desc: "A large dark bird fills the foreground while a smaller one sits behind it",
+    time: "Mar 29, 2:22 PM",
+  },
+  {
+    file: "2026-03-31_10-15-57.jpg",
+    desc: "Three birds with brown and reddish plumage, mid-morning visitors",
+    time: "Mar 31, 10:15 AM",
+  },
+  {
+    file: "2026-03-29_12-20-33.jpg",
+    desc: "The very first bird — a tiny dark silhouette on the far right of the railing",
+    time: "Mar 29, 12:20 PM",
+  },
+  {
+    file: "2026-03-31_18-49-53.jpg",
+    desc: "A House Finch pair at dusk — one red-headed, one brown. The last sighting.",
+    time: "Mar 31, 6:49 PM",
+  },
+];
+
+const SPECIES = [
+  { name: "House Sparrow", n: 180 },
+  { name: "House Finch", n: 145 },
+  { name: "Unknown (dark, large)", n: 52 },
+  { name: "Pigeon / Dove", n: 28 },
+  { name: "Crow / Raven", n: 24 },
+  { name: "Possible hawk", n: 4 },
+];
+
+function App() {
+  return (
+    <div>
+      {/* HERO */}
+      <header>
+        <h1>When Do Birds Show Up at My Home?</h1>
+        <p>
+          $80 in hardware. 93 lines of Python. 37 cents of AI.<br/>
+          1,500 photos. 433 birds. One answer.
+        </p>
+        <div className="byline">Akshay Sharma &middot; April 2026 &middot; Emeryville, CA</div>
+      </header>
+
+      {/* HERO IMAGE */}
+      <div className="wrap-wide hero-img">
+        <img src={`${SB}/2026-03-31_13-34-37.jpg`} alt="Three House Finches up close" loading="eager" />
+        <div className="caption">March 31, 1:34 PM — Three House Finches, right up against the camera.</div>
+      </div>
+
+      <div className="wrap">
+        {/* THE QUESTION */}
+        <section>
+          <p>
+            I had one question. Not a startup idea, not a product pitch.
+            Just: when do birds actually show up at my bird feeder?
+          </p>
+          <p>
+            So I spent a Saturday afternoon setting up a Raspberry Pi Zero 2W with a USB webcam
+            on my balcony in Emeryville. It captures a photo every 60 seconds, adjusts for lighting,
+            and uploads to Supabase. Then I pointed a vision AI at all 1,500 images.
+          </p>
+        </section>
+
+        {/* THE ANSWER */}
+        <section>
+          <h2>The answer</h2>
+          <div className="answer-box">
+            <div className="big">3 PM</div>
+            <div className="sub">is when birds peak at my feeder</div>
+          </div>
+          <p>
+            I assumed it would be dawn. It's not. The afternoon window from noon to 5 PM accounts
+            for 70% of all bird activity. Morning contributes 21%. Nights are completely silent —
+            zero birds between midnight and 9 AM.
+          </p>
+        </section>
+
+        {/* HOURLY CHART */}
+        <section>
+          <h2>Birds by hour</h2>
+          <p style={{ fontSize: '0.875rem', color: '#9ca3af' }}>433 birds across 3 days. Each bar is one hour.</p>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={HOURLY} barCategoryGap="15%">
+                <XAxis dataKey="h" stroke="#d1d5db" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis stroke="#d1d5db" fontSize={10} tickLine={false} axisLine={false} width={30} />
+                <Tooltip
+                  cursor={{ fill: 'rgba(0,0,0,0.03)' }}
+                  contentStyle={{ background: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '13px', fontFamily: 'system-ui' }}
+                  formatter={(v) => [`${v} birds`, '']}
+                  labelFormatter={() => ''}
+                />
+                <Bar dataKey="b" radius={[3, 3, 0, 0]}>
+                  {HOURLY.map((entry, i) => (
+                    <Cell key={i} fill={entry.b > 50 ? '#111827' : entry.b > 20 ? '#6b7280' : entry.b > 0 ? '#d1d5db' : '#f3f4f6'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
+
+        {/* GROWTH */}
+        <section>
+          <h2>They told their friends</h2>
+          <p>
+            Day 1 had 55 birds. Day 2 had 51. Day 3 exploded to 327 — a 6x increase.
+            The feeder was discovered.
+          </p>
+          <div className="chart-container" style={{ height: 160 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={DAILY}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                <XAxis dataKey="day" stroke="#d1d5db" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#d1d5db" fontSize={12} tickLine={false} axisLine={false} width={35} />
+                <Tooltip
+                  contentStyle={{ background: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '13px', fontFamily: 'system-ui' }}
+                  formatter={(v) => [`${v} birds`, '']}
+                />
+                <Area type="monotone" dataKey="birds" stroke="#111827" fill="#111827" fillOpacity={0.08} strokeWidth={2.5} dot={{ r: 4, fill: '#111827' }} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
+
+        {/* SPECIES */}
+        <section>
+          <h2>Who's visiting</h2>
+          <p>
+            Mostly sparrows and House Finches — the ones with the red heads. Occasional pigeons
+            photobombing the camera. And a few frames with something larger that might be a hawk.
+          </p>
+          <div className="species-list">
+            {SPECIES.map((s, i) => (
+              <div className="species-row" key={i}>
+                <span className="species-name">{s.name}</span>
+                <div className="species-bar-bg">
+                  <div className="species-bar" style={{ width: `${(s.n / 180) * 100}%` }}></div>
+                </div>
+                <span className="species-n">{s.n}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* GALLERY */}
+      <section>
+        <div className="wrap" style={{ marginBottom: 32 }}>
+          <h2>The images</h2>
+          <p style={{ color: '#6b7280', fontSize: '0.9375rem' }}>Real frames from the camera. Loaded live from Supabase.</p>
+        </div>
+        <div className="wrap-wide">
+          {GALLERY.map((img, i) => (
+            <div className="gallery-item" key={i}>
+              <img src={`${SB}/${img.file}`} alt={img.desc} loading="lazy" />
+              <div className="gallery-meta">
+                <span className="desc">{img.desc}</span>
+                <span className="time">{img.time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="wrap">
+        {/* SETUP */}
+        <section>
+          <h2>The setup</h2>
+          <div className="bom-table">
+            {[
+              ['Raspberry Pi Zero 2 W Kit', '$35.99'],
+              ['CanaKit 5V Power Supply', '$12.95'],
+              ['TAIMI 32GB Micro SD Card', '$8.99'],
+              ['Diccik 1080P USB Webcam', '$22.30'],
+              ['Supabase Storage', 'free'],
+              ['OpenRouter — Qwen VL 7B', '$0.37'],
+            ].map(([item, price], i) => (
+              <div className="bom-row" key={i}>
+                <span className="item">{item}</span>
+                <span className={`price ${price === 'free' ? 'free' : ''}`}>{price}</span>
+              </div>
+            ))}
+            <div className="bom-total">
+              <span className="item">Total</span>
+              <span className="price">$80.60</span>
+            </div>
+          </div>
+        </section>
+
+        {/* HOW IT WORKS */}
+        <section>
+          <h2>How it works</h2>
+          <p>
+            A 93-line Python script runs in a loop. Every 60 seconds: capture a 1280×720 frame
+            with <code>fswebcam</code>, post-process with ImageMagick for the varying outdoor light,
+            upload to Supabase with retry logic for the Pi Zero's terrible WiFi.
+          </p>
+          <p>
+            The design philosophy: never crash. If the WiFi drops, retry with exponential backoff.
+            If all retries fail, skip the frame and move on. In 3 days it achieved 99%+ upload success
+            from a $16 computer on a windowsill.
+          </p>
+          <p>
+            For analysis, every image goes to Qwen 2.5 VL 7B through OpenRouter. 996 input tokens
+            per image, ~34 output tokens. Total cost for 1,500 images: thirty-seven cents.
+          </p>
+        </section>
+
+        {/* NUMBERS */}
+        <section>
+          <h2>By the numbers</h2>
+          <div className="numbers-grid">
+            {[
+              ['1,500', 'images captured'],
+              ['433', 'birds spotted'],
+              ['356', 'frames with birds'],
+              ['68', 'multi-bird sightings'],
+              ['5', 'most in one frame'],
+              ['$0.0002', 'cost per classification'],
+            ].map(([n, label], i) => (
+              <div className="number-cell" key={i}>
+                <div className="n">{n}</div>
+                <div className="label">{label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SCALE */}
+        <section>
+          <h2>What it costs to keep running</h2>
+          <p>Hardware is a one-time $80. The ongoing cost is just the AI.</p>
+          <div className="scale-grid">
+            <div><div className="n">$0.37</div><div className="label">3 days</div></div>
+            <div><div className="n">$2.24</div><div className="label">1 month</div></div>
+            <div><div className="n">$27</div><div className="label">1 year</div></div>
+          </div>
+        </section>
+
+        {/* CLOSING */}
+        <section className="closing">
+          <p>
+            I shared this on YC's Bookface as a tiny weekend project. Someone asked how they
+            could gift this to their dad. I hadn't thought about that — I just wanted to know when
+            the birds come.
+          </p>
+          <p>
+            Now I know. They peak at 3 PM. They prefer sunny afternoons over overcast ones.
+            And if you put out a feeder, give it three days — they'll find it, and they'll
+            bring their friends.
+          </p>
+        </section>
+
+        <footer>
+          <p>Built with a Raspberry Pi Zero 2W, a USB webcam, and genuine curiosity.</p>
+          <p>Images served live from Supabase. Analysis by Qwen 2.5 VL via OpenRouter.</p>
+          <p style={{ marginTop: 12 }}><a href="https://github.com/akshay326" style={{ color: '#9ca3af', textDecoration: 'none' }}>github.com/akshay326</a></p>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
