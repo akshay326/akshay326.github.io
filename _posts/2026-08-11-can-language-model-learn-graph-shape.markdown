@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Can a language model learn the shape of a graph from examples?"
-date: 2026-08-11 10:00:00 -0700
+date: 2026-08-10 16:00:00 -0700
+permalink: /graph-shape/
 ---
-
 # Can a language model learn the shape of a graph from examples?
 
 I wanted to test a simple question: if a language model reads examples of walks through a graph, do its internal representations start to reflect that graph?
