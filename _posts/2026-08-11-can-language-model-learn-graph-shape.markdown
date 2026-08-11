@@ -5,92 +5,67 @@ date: 2026-08-10 16:00:00 -0700
 permalink: /graph-shape/
 ---
 
-I wanted to test a simple question: if a language model reads examples of walks through a graph, do its internal representations start to reflect that graph?
+I wanted to test a narrow question: can a frozen language model learn something shaped like a graph before it can reliably solve graph problems?
 
-This is not a question about whether the model can repeat the examples. It is a question about whether the model's internal geometry changes in a graph-shaped way.
+I ran two experiments on one model, one layer, four graph layouts, and five random seeds. The first measures a graph-shaped intermediate representation. The second asks whether the final layer can use it.
 
-I ran two Colab experiments with a frozen Llama-3.1-8B model. I did not train the model. I gave it random walks through small graphs and measured what happened inside it.
+## Setup
 
-## The graphs
+Each example is a random walk on a graph. The model sees the walk as text. I compare hidden-state geometry with graph adjacency, then test exact shortest-path behavior.
 
-Each graph had 16 words as its nodes. For example, one graph connected `apple` to `bird`, while another connected nodes using a four-dimensional cube rule. The words stayed the same. Only the hidden graph changed.
+![Four graph topologies used in the experiment]({{ site.baseurl }}/assets/images/graph-icl/original_graph_topologies.svg)
 
-![The four graph layouts used in the experiment]({{ site.baseurl }}/assets/images/graph-icl/original_graph_topologies.svg)
+## Experiment A: representation
 
-The four layouts were a 4×4 grid, a hypercube, a circulant graph, and a Möbius ladder. The drawing above shows the actual edges. It is not a picture of the model's hidden states.
+At layer 26, I projected token states into a fixed PCA basis and measured how well nearby graph nodes aligned. The score rose with context length across all four layouts.
 
-## What I measured
+![Alignment score by context length]({{ site.baseurl }}/assets/images/graph-icl/alignment_curves_per_graph.png)
 
-In the first experiment, I recorded the model's residual stream at layer 26. I used five random seeds and context lengths from 16 to 1,400 tokens.
+The transition looks like a representation forming over context. It is not yet evidence of a routing algorithm.
 
-The main measure asks whether words connected by an edge are closer to each other than words that are not connected. The score is a z-score against a shuffled-graph null. A higher score means stronger graph-neighbor alignment.
+## One synchronized view
 
-The score started near 25 at the shortest context. At the longest context, the five-seed medians were between 55.9 and 70.6, depending on the graph.
+The slider keeps the graph, node, PCA basis, and context length synchronized. Move one control to inspect the same node before and after the representation changes.
 
-The rise happened for all four graphs. This is the clearest result of the experiment: more examples produced more graph-like organization in an intermediate representation.
-
-![Neighbor alignment rises as the context grows]({{ site.baseurl }}/assets/images/graph-icl/alignment_curves_per_graph.png)
-
-These are trajectories, not snapshots. The x-axis is context length. Each line follows one seed. The dots summarize the seeds. The four graphs rise in roughly the same window.
-
-## What does the picture look like?
-
-PCA gives us a useful picture of the hidden states. It reduces a large vector to two dimensions, so it is only an illustration. The actual test uses the invariant alignment score above.
-
-The interactive figure below is built from the exported Experiment A checkpoints. Each row keeps the original topology on the left and shows that graph's class-mean representation on the right. One slider drives all four rows through the exact measured contexts: 16, 32, 64, 128, 256, 512, 1,024, and 1,400 tokens. For each graph, the PCA basis is fit once at L = 1,400; the basis, axis limits, node colors, labels, and framing then stay fixed for every context.
-
-<figure class="graph-slider-figure">
   <iframe src="{{ site.baseurl }}/assets/images/graph-icl/pca_graph_slider.html" title="Synchronized graph topology and fixed-basis PCA slider" loading="lazy" style="width:100%;height:1480px;border:1px solid #d7dce5;border-radius:12px;background:#fff"></iframe>
-  <figcaption>Interactive view: original topology at left; notebook-derived fixed-basis PCA at right. The displayed neighbor-alignment z-score is the measured checkpoint statistic, not a visual estimate.</figcaption>
-</figure>
 
+## What the result says
 
-At short context, the words do not line up with the graph very clearly. At longer context, the cloud changes shape and the graph edges become easier to see. The picture helps explain the result, but it is not the measurement by itself.
-
-## What I can say now
-
-1. A frozen language model's intermediate representations become more aligned with graph neighbors as it reads more random-walk examples.
-2. The same broad rise appears across four different graph layouts.
-3. The simple prediction that spectral relaxation orders the transition was not supported.
-4. The experiment does not prove an alternative mechanism.
-5. Exact shortest-path use at the final layer was not demonstrated.
-
-The strongest claim is about representation, not routing. I am deliberately not drawing a “final circuit” diagram. No circuit was traced. The head-ablation result only says that some heads affect the score, and the controls were too limited to identify a circuit.
+1. The intermediate representation becomes more graph-aligned as context grows.
+2. The broad rise appears across four layouts.
+3. Exact shortest-path use at the final layer was not demonstrated.
 
 ## Limitations and next steps
 
-The main limitation is scale. This is a four-graph comparison with one frozen model, one layer, five seeds, and a small set of graph properties that are not independently controlled. The topology drawings and PCA clouds are useful for orientation, but they are not additional evidence that the model learned a general graph algorithm.
+This is a small comparison: one frozen model, one layer, four graphs, five seeds, and graph properties that are not independently controlled. The drawings and PCA clouds help orientation; they are not separate evidence that the model learned a general graph algorithm.
 
 ### The mechanism remains unresolved
 
-I tested a more specific idea: perhaps the model builds this geometry by diffusing information through the graph. If that were true, graphs with slower spectral relaxation should reorganize later.
+I tested a specific prediction: if the model builds this geometry by diffusing information through the graph, slower spectral relaxation should produce a later transition.
 
-Before looking at the result, I recorded a spectral mixing proxy, τ, for each graph and a rule for comparing it with the estimated transition point. The proxy values ranged from 1.44 to 4.60. The estimated transition points did not follow the predicted order.
-
-The saved result was Spearman ρ = −0.20. Exact enumeration of the 24 possible graph label orders gives p = 0.917.
+The spectral mixing proxy τ ranged from 1.44 to 4.60. The estimated transition points did not follow its predicted order: Spearman ρ = −0.20, with exact-order p = 0.917.
 
 ![Estimated transition points versus the spectral mixing proxy]({{ site.baseurl }}/assets/images/graph-icl/Lstar_vs_tau.png)
 
-So the simple diffusion ordering was not supported in this four-graph test. The τ value is still useful as a hypothesis variable for a better-controlled experiment, but this result does not identify the mechanism or show that the model uses counts instead.
+The τ value remains useful as a hypothesis variable. This four-graph result does not identify the mechanism or show that the model uses counts instead.
 
-### Representation is not use
+### A second test: representation is not use
 
-The first experiment measured an intermediate representation. The second asked a harder question: can the model use that representation to answer exact shortest-path questions?
-
-Here the answer was not established. The model's final-layer accuracy stayed near the 0.25 uniform baseline. Every 95% bootstrap interval included 0.25, so the preregistered success rule failed.
-
-An explicit breadth-first-search program did much better. At a search budget of 64, BFS accuracy was 0.883 to 0.906. By budget 128 it was close to perfect.
+The final-layer accuracy stayed near the 0.25 uniform baseline; every 95% bootstrap interval included 0.25. An explicit breadth-first-search program reached 0.883–0.906 at budget 64 and was close to perfect by 128.
 
 ![Exact next-neighbor accuracy rises with context]({{ site.baseurl }}/assets/images/graph-icl/accuracy_curves_per_graph.png)
 
-This is not a contradiction. A model can contain a useful graph-like representation without reliably turning it into an exact route at the final layer. Representation and use are separate abilities.
+A useful graph-shaped representation can therefore coexist with unreliable exact routing. Representation and use are separate abilities.
 
 ### Next steps
 
-The next useful experiment is not a larger claim. It is a cleaner test: use lazy random walks, hold graph degree fixed, measure at least 12 independent graphs, and record transition counts and coverage directly. Then compare count-based and spectral explanations at the graph level.
+Use lazy random walks, hold graph degree fixed, measure at least 12 independent graphs, and record transition counts and coverage directly. Then compare count-based and spectral explanations at the graph level.
 
-## Evidence and artifacts
+## Reproduction and references
 
-The interactive slider is a self-contained asset generated from the exported Experiment A seed-0 baseline checkpoints. It does not require reader access to Drive. The four topology drawings and the measured context-length projections are published with this post.
+The [graph-icl assets](https://github.com/akshay326/akshay326.github.io/tree/main/assets/images/graph-icl) contain the published figures and self-contained slider. The current repository does not include the raw checkpoints or experiment notebooks, so these links are context and reproducibility guidance rather than a substitute for the missing training data.
 
-The analysis was motivated by [Park et al.](https://arxiv.org/abs/2501.00070), the [induction-head account](https://iclr-blogposts.github.io/2026/blog/2026/iclr-induction/), and the distinction between learning a representation and using it discussed by [Lepori, Linzen, and Yuan](https://aclanthology.org/2026/acl-long.676/).
+- [Park et al., *In-Context Learning of Representations*](https://arxiv.org/abs/2501.00070)
+- [Induction heads and in-context learning](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html)
+- [Google Labs: Gemini for Science](https://labs.google/science/)
+- [Lepori, Linzen, and Yuan, *Language Models Struggle to Use Representations Learned In-Context*](https://aclanthology.org/2026/acl-long.676/)
