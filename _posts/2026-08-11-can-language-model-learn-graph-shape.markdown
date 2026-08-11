@@ -27,7 +27,23 @@ The transition looks like a representation forming over context. It is not yet e
 
 The slider keeps the graph, node, PCA basis, and context length synchronized. Move one control to inspect the same node before and after the representation changes.
 
-  <iframe src="{{ site.baseurl }}/assets/images/graph-icl/pca_graph_slider.html" title="Synchronized graph topology and fixed-basis PCA slider" loading="lazy" style="width:100%;height:1480px;border:1px solid #d7dce5;border-radius:12px;background:#fff"></iframe>
+  <iframe src="{{ site.baseurl }}/assets/images/graph-icl/pca_graph_slider.html" title="Synchronized graph topology and fixed-basis PCA slider" loading="eager" style="width:100%;height:1480px;border:1px solid #d7dce5;border-radius:12px;background:#fff"></iframe>
+  <script>
+  (function () {
+    const frame = document.currentScript.previousElementSibling;
+    if (!frame || frame.tagName !== "IFRAME") return;
+    const resize = function () {
+      try {
+        const documentElement = frame.contentDocument.documentElement;
+        const body = frame.contentDocument.body;
+        const height = Math.max(documentElement.scrollHeight, body ? body.scrollHeight : 0);
+        if (height > 0) frame.style.height = height + "px";
+      } catch (_) {}
+    };
+    frame.addEventListener("load", resize);
+    window.addEventListener("resize", resize);
+  }());
+  </script>
 
 ## What the result says
 
