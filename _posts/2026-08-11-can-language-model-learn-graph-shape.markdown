@@ -4,7 +4,6 @@ title: "Can a language model learn the shape of a graph from examples?"
 date: 2026-08-10 16:00:00 -0700
 permalink: /graph-shape/
 ---
-# Can a language model learn the shape of a graph from examples?
 
 I wanted to test a simple question: if a language model reads examples of walks through a graph, do its internal representations start to reflect that graph?
 
@@ -38,7 +37,16 @@ These are trajectories, not snapshots. The x-axis is context length. Each line f
 
 PCA gives us a useful picture of the hidden states. It reduces a large vector to two dimensions, so it is only an illustration. The actual test uses the invariant alignment score above.
 
-![PCA views of the grid at four context lengths]({{ site.baseurl }}/assets/images/graph-icl/pca_fixed_basis_grid.png)
+The interactive figure below is built from the exported Experiment A checkpoints. Each row keeps the original topology on the left and shows that graph's class-mean representation on the right. One slider drives all four rows through the exact measured contexts: 16, 32, 64, 128, 256, 512, 1,024, and 1,400 tokens. For each graph, the PCA basis is fit once at L = 1,400; the basis, axis limits, node colors, labels, and framing then stay fixed for every context.
+
+<figure class="graph-slider-figure">
+  <iframe src="{{ site.baseurl }}/assets/images/graph-icl/pca_graph_slider.html" title="Synchronized graph topology and fixed-basis PCA slider" loading="lazy" style="width:100%;height:1420px;border:1px solid #d7dce5;border-radius:12px;background:#fff"></iframe>
+  <figcaption>Interactive view: original topology at left; notebook-derived fixed-basis PCA at right. The displayed neighbor-alignment z-score is the measured checkpoint statistic, not a visual estimate.</figcaption>
+</figure>
+
+If the interactive view is unavailable, this contact sheet shows four measured checkpoints with the same fixed-basis convention:
+
+![Static contact sheet of all four graph families at four context lengths]({{ site.baseurl }}/assets/images/graph-icl/pca_fixed_basis_all_graphs.svg)
 
 At short context, the words do not line up with the graph very clearly. At longer context, the cloud changes shape and the graph edges become easier to see. The picture helps explain the result, but it is not the measurement by itself.
 
@@ -80,11 +88,6 @@ The next useful experiment is not a larger claim. It is a cleaner test: use lazy
 
 ## Evidence and artifacts
 
-- [Experiment A results folder](https://drive.google.com/drive/folders/1GHHwUXQCN49YnKD2yBhKwg8PHWy3-F8v)
-- [Experiment B results folder](https://drive.google.com/drive/folders/1RYUYTlnv-xtwhs3jumQdY7c6_bTI3hww)
-- [Saved alignment metrics](https://drive.google.com/file/d/1UzENqK0tfXsM6j18vzAHNDkJODRrtl4A/view?usp=drivesdk)
-- [Saved transition result](https://drive.google.com/file/d/1Xr_QqZ7zM0g6dtBOkv3VohRWV3US8Kns/view?usp=drivesdk)
-- [Shortest-path summary](https://drive.google.com/file/d/19d2f_ym_egUz1kr35zeunirbp8HV41t9/view?usp=drivesdk)
-- [Bootstrap report for the path test](https://drive.google.com/file/d/1VgMY3X2D-xSGgiAdpoZ8oID0QeilhBmj/view?usp=drivesdk)
+The interactive slider and static contact sheet above are self-contained assets generated from the exported Experiment A seed-0 baseline checkpoints. They do not require reader access to Drive. The four topology drawings and the measured context-length projections are published with this post.
 
 The analysis was motivated by [Park et al.](https://arxiv.org/abs/2501.00070), the [induction-head account](https://iclr-blogposts.github.io/2026/blog/2026/iclr-induction/), and the distinction between learning a representation and using it discussed by [Lepori, Linzen, and Yuan](https://aclanthology.org/2026.acl-long.676/).
