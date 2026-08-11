@@ -40,29 +40,40 @@ PCA gives us a useful picture of the hidden states. It reduces a large vector to
 The interactive figure below is built from the exported Experiment A checkpoints. Each row keeps the original topology on the left and shows that graph's class-mean representation on the right. One slider drives all four rows through the exact measured contexts: 16, 32, 64, 128, 256, 512, 1,024, and 1,400 tokens. For each graph, the PCA basis is fit once at L = 1,400; the basis, axis limits, node colors, labels, and framing then stay fixed for every context.
 
 <figure class="graph-slider-figure">
-  <iframe src="{{ site.baseurl }}/assets/images/graph-icl/pca_graph_slider.html" title="Synchronized graph topology and fixed-basis PCA slider" loading="lazy" style="width:100%;height:1420px;border:1px solid #d7dce5;border-radius:12px;background:#fff"></iframe>
+  <iframe src="{{ site.baseurl }}/assets/images/graph-icl/pca_graph_slider.html" title="Synchronized graph topology and fixed-basis PCA slider" loading="lazy" style="width:100%;height:1480px;border:1px solid #d7dce5;border-radius:12px;background:#fff"></iframe>
   <figcaption>Interactive view: original topology at left; notebook-derived fixed-basis PCA at right. The displayed neighbor-alignment z-score is the measured checkpoint statistic, not a visual estimate.</figcaption>
 </figure>
 
-If the interactive view is unavailable, this contact sheet shows four measured checkpoints with the same fixed-basis convention:
-
-![Static contact sheet of all four graph families at four context lengths]({{ site.baseurl }}/assets/images/graph-icl/pca_fixed_basis_all_graphs.svg)
 
 At short context, the words do not line up with the graph very clearly. At longer context, the cloud changes shape and the graph edges become easier to see. The picture helps explain the result, but it is not the measurement by itself.
 
-## A prediction about the mechanism
+## What I can say now
 
-I also tested a more specific idea. Perhaps the model builds this geometry by diffusing information through the graph. If that were true, graphs with slower spectral relaxation should reorganize later.
+1. A frozen language model's intermediate representations become more aligned with graph neighbors as it reads more random-walk examples.
+2. The same broad rise appears across four different graph layouts.
+3. The simple prediction that spectral relaxation orders the transition was not supported.
+4. The experiment does not prove an alternative mechanism.
+5. Exact shortest-path use at the final layer was not demonstrated.
 
-Before looking at the result, I recorded a spectral proxy for each graph and a rule for comparing it with the estimated transition point. The proxy values ranged from 1.44 to 4.60. The estimated transition points did not follow the predicted order.
+The strongest claim is about representation, not routing. I am deliberately not drawing a “final circuit” diagram. No circuit was traced. The head-ablation result only says that some heads affect the score, and the controls were too limited to identify a circuit.
+
+## Limitations and next steps
+
+The main limitation is scale. This is a four-graph comparison with one frozen model, one layer, five seeds, and a small set of graph properties that are not independently controlled. The topology drawings and PCA clouds are useful for orientation, but they are not additional evidence that the model learned a general graph algorithm.
+
+### The mechanism remains unresolved
+
+I tested a more specific idea: perhaps the model builds this geometry by diffusing information through the graph. If that were true, graphs with slower spectral relaxation should reorganize later.
+
+Before looking at the result, I recorded a spectral mixing proxy, τ, for each graph and a rule for comparing it with the estimated transition point. The proxy values ranged from 1.44 to 4.60. The estimated transition points did not follow the predicted order.
 
 The saved result was Spearman ρ = −0.20. Exact enumeration of the 24 possible graph label orders gives p = 0.917.
 
-![Estimated transition points versus the spectral proxy]({{ site.baseurl }}/assets/images/graph-icl/Lstar_vs_tau.png)
+![Estimated transition points versus the spectral mixing proxy]({{ site.baseurl }}/assets/images/graph-icl/Lstar_vs_tau.png)
 
-So the simple diffusion ordering was not supported in this four-graph test. This does **not** prove that the model uses counts instead. The experiment has only four graph-level observations, and the graphs differ in more than one property. The honest conclusion is narrower: the data are compatible with needing a similar amount of transition evidence, but they do not identify that mechanism.
+So the simple diffusion ordering was not supported in this four-graph test. The τ value is still useful as a hypothesis variable for a better-controlled experiment, but this result does not identify the mechanism or show that the model uses counts instead.
 
-## A second test: can the model use the graph?
+### Representation is not use
 
 The first experiment measured an intermediate representation. The second asked a harder question: can the model use that representation to answer exact shortest-path questions?
 
@@ -74,20 +85,12 @@ An explicit breadth-first-search program did much better. At a search budget of 
 
 This is not a contradiction. A model can contain a useful graph-like representation without reliably turning it into an exact route at the final layer. Representation and use are separate abilities.
 
-## What I can say now
-
-1. A frozen language model's intermediate representations become more aligned with graph neighbors as it reads more random-walk examples.
-2. The same broad rise appears across four different graph layouts.
-3. The simple prediction that spectral relaxation orders the transition was not supported.
-4. The experiment does not prove an alternative mechanism.
-5. Exact shortest-path use at the final layer was not demonstrated.
-
-I am deliberately not drawing a “final circuit” diagram. No circuit was traced. The head-ablation result only says that some heads affect the score, and the controls were too limited to identify a circuit.
+### Next steps
 
 The next useful experiment is not a larger claim. It is a cleaner test: use lazy random walks, hold graph degree fixed, measure at least 12 independent graphs, and record transition counts and coverage directly. Then compare count-based and spectral explanations at the graph level.
 
 ## Evidence and artifacts
 
-The interactive slider and static contact sheet above are self-contained assets generated from the exported Experiment A seed-0 baseline checkpoints. They do not require reader access to Drive. The four topology drawings and the measured context-length projections are published with this post.
+The interactive slider is a self-contained asset generated from the exported Experiment A seed-0 baseline checkpoints. It does not require reader access to Drive. The four topology drawings and the measured context-length projections are published with this post.
 
-The analysis was motivated by [Park et al.](https://arxiv.org/abs/2501.00070), the [induction-head account](https://iclr-blogposts.github.io/2026/blog/2026/iclr-induction/), and the distinction between learning a representation and using it discussed by [Lepori, Linzen, and Yuan](https://aclanthology.org/2026.acl-long.676/).
+The analysis was motivated by [Park et al.](https://arxiv.org/abs/2501.00070), the [induction-head account](https://iclr-blogposts.github.io/2026/blog/2026/iclr-induction/), and the distinction between learning a representation and using it discussed by [Lepori, Linzen, and Yuan](https://aclanthology.org/2026/acl-long.676/).
