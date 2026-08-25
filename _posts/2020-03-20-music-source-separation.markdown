@@ -4,7 +4,7 @@ title:  "Music source separation using Deep learning in 5 minutes"
 date:   2020-03-20 14:00:00 -0500
 ---
 
-# Researchers at Facebook developed a music extractor in their Demucs library. Learn how to use it in Google Colab
+## Researchers at Facebook developed a music extractor in their Demucs library. Learn how to use it in Google Colab
 
 <p style="text-align: center">
     <em>

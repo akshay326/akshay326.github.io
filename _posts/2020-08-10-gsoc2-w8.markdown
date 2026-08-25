@@ -5,7 +5,7 @@ date:   2020-08-10 14:00:00 -0500
 ---
 
 
-# Move DiffOpt.jl code to other JuMP-dev packages; Begin documenting the code
+## Move DiffOpt.jl code to other JuMP-dev packages; Begin documenting the code
 
 Hi all! This blog is one of a series marking my progress in [Differentiable Optimization Problems](https://summerofcode.withgoogle.com/projects/#5232064888045568). You may enjoy reading [my first blog](http://www.imakshay.com/post/8). 
 

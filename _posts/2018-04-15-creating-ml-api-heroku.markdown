@@ -5,7 +5,7 @@ date:   2018-04-15 14:00:00 -0500
 ---
 
 
-# Building an AR Marker Detection program using ArUco Library
+## Building an AR Marker Detection program using ArUco Library
 
 Since long I’ve been thinking of creating an API which fellow developers could use over cloud. But I didn’t want it to be the traditional [Hello World API](https://github.com/shubhamvadhera/hello-world-rest) or [simple SQL Flask API](https://medium.com/python-pandemonium/build-simple-restful-api-with-python-and-flask-part-1-fae9ff66a706)  —  supporting the classical user name and email ID GET, PUT, POST, DELETE REST requests. Since AI and ML are so pervasive now, I thought of giving ML a try — and it is easy : )
 

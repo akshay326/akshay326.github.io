@@ -5,7 +5,7 @@ date:   2018-01-15 14:00:00 -0500
 ---
 
 
-# Setting up opencv's ArUco library for marker detection
+## Setting up opencv's ArUco library for marker detection
 
 ![ArUco + OGRE demo. Credits : https://sourceforge.net/projects/aruco/](https://cdn-images-1.medium.com/max/1600/1*zAidwmEHUvUtuqWEJRBQiA.jpeg)
 

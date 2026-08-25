@@ -5,7 +5,7 @@ date:   2020-07-27 14:00:00 -0500
 ---
 
 
-# Support SDP constraints, add windows appveyor build, make DiffOpt.jl robust
+## Support SDP constraints, add windows appveyor build, make DiffOpt.jl robust
 
 Hi all! This blog is one of a series marking my progress in [Differentiable Optimization Problems](https://summerofcode.withgoogle.com/projects/#5232064888045568).
 You may enjoy reading [my first blog](http://www.imakshay.com/post/8). 

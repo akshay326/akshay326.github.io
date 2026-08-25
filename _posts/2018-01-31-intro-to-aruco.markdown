@@ -4,7 +4,7 @@ title:  "Introduction to ArUco"
 date:   2018-01-31 14:00:00 -0500
 ---
 
-# Building an AR Marker Detection program using ArUco Library
+## Building an AR Marker Detection program using ArUco Library
 
 ![Marker detection and object rendering using opencv](https://cdn-images-1.medium.com/max/800/1*8hvVNfI8geQxe0QKVZQovw.png)
 ## Introduction to AR using ArUco

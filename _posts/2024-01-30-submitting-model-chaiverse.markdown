@@ -4,7 +4,7 @@ title: "Chaiverse: Quick Start Guide"
 date: 2024-01-30 10:00:00 -0500
 ---
 
-# Chaiverse: Quick Start Guide
+## Chaiverse: Quick Start Guide
 
 Welcome fellow explorer! Today we'll dive into how as an Machine Learning Engineer, I submitted a fine-tuned model via the revolutionary AI crowdsourcing platform - the Chaiverse. Hold onto your hats, here we go!
 Here's the colab notebook: https://colab.research.google.com/drive/1iBopRkUnF5_R0VUZpxICvgOThAoQP3UR?authuser=3#scrollTo=M4rauAXbTWI1

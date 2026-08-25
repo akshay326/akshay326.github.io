@@ -19,7 +19,7 @@ Each example is a random walk on a graph. The model sees the walk as text. I com
 
 At layer 26, I projected token states into a fixed PCA basis and measured how well nearby graph nodes aligned. The score rose with context length across all four layouts.
 
-![Alignment score by context length]({{ site.baseurl }}/assets/images/graph-icl/alignment_curves_per_graph.png)
+![Alignment score by context length]({{ site.baseurl }}/assets/images/graph-icl/alignment_curves_per_graph.webp){: width="5520" height="1200"}
 
 The transition looks like a representation forming over context. It is not yet evidence of a routing algorithm.
 
@@ -61,7 +61,7 @@ I tested a specific prediction: if the model builds this geometry by diffusing i
 
 The spectral mixing proxy τ ranged from 1.44 to 4.60. The estimated transition points did not follow its predicted order: Spearman ρ = −0.20, with exact-order p = 0.917.
 
-![Estimated transition points versus the spectral mixing proxy]({{ site.baseurl }}/assets/images/graph-icl/Lstar_vs_tau.png)
+![Estimated transition points versus the spectral mixing proxy]({{ site.baseurl }}/assets/images/graph-icl/Lstar_vs_tau.webp){: width="1400" height="900"}
 
 The τ value remains useful as a hypothesis variable. This four-graph result does not identify the mechanism or show that the model uses counts instead.
 
@@ -69,7 +69,7 @@ The τ value remains useful as a hypothesis variable. This four-graph result doe
 
 The final-layer accuracy stayed near the 0.25 uniform baseline; every 95% bootstrap interval included 0.25. An explicit breadth-first-search program reached 0.883–0.906 at budget 64 and was close to perfect by 128.
 
-![Exact next-neighbor accuracy rises with context]({{ site.baseurl }}/assets/images/graph-icl/accuracy_curves_per_graph.png)
+![Exact next-neighbor accuracy rises with context]({{ site.baseurl }}/assets/images/graph-icl/accuracy_curves_per_graph.webp){: width="2000" height="650"}
 
 A useful graph-shaped representation can therefore coexist with unreliable exact routing. Representation and use are separate abilities.
 

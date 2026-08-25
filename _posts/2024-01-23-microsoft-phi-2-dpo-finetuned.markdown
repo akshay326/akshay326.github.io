@@ -4,7 +4,7 @@ title: "Fine-tuning Microsoft's Phi-2 Machine Learning Model with DPO"
 date: 2024-01-23 10:00:00 -0500
 ---
 
-# Fine-tuning Microsoft's Phi-2 Machine Learning Model with DPO
+## Fine-tuning Microsoft's Phi-2 Machine Learning Model with DPO
 
 ### Introduction
 In this blog, we'll focus on fine-tuning a cutting-edge language model from Microsoft, known as Phi-2, with Differential Privacy Optimization (DPO). We'll do this using an open-source dataset, modern Python libraries and the power of Google's Colaboratory. Our code examples are in Python and are designed for simplicity and clarity. 

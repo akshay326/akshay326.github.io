@@ -5,7 +5,7 @@ date:   2018-06-16 14:00:00 -0500
 ---
 
 
-# Adding java wrapping support to visp_core, visp_imgproc and visp_io modules
+## Adding java wrapping support to visp_core, visp_imgproc and visp_io modules
 ![Java Warpping Image](https://i.stack.imgur.com/BsKbq.png)
 
 Last week I completed building `visp_java` module clean. Although there were no errors, yet the libraries were not compiling(demangling showed missing symbols). Instead of dubgging it, I focused on wrapping a few files manually and create a demo or something, at least for `core` and `imgproc` modules

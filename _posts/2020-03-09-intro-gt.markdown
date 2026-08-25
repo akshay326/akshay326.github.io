@@ -4,7 +4,7 @@ title:  "Introductory workshop on Game Theory @ IIT Varanasi"
 date:   2020-03-09 14:00:00 -0500
 ---
 
-# Introductory workshop on Game Theory @ IIT Varanasi
+## Introductory workshop on Game Theory @ IIT Varanasi
 
 <p style="text-align: center">
     <em>

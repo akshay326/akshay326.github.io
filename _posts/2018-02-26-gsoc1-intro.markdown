@@ -5,7 +5,7 @@ date:   2018-02-26 14:00:00 -0500
 ---
 
 
-# What's GSoC? How do I apply for it?
+## What's GSoC? How do I apply for it?
 
 ![GSOC Image](https://cdn-images-1.medium.com/max/600/1*ZcNmNPNXGg_iOyklYUbl-w.png)
 

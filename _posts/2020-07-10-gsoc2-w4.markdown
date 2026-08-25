@@ -5,7 +5,7 @@ date:   2020-07-10 14:00:00 -0500
 ---
 
 
-# Solving and differentiating convex conic programs w.r.t. problem data, improving solver interface, and benchmarking with diffcp
+## Solving and differentiating convex conic programs w.r.t. problem data, improving solver interface, and benchmarking with diffcp
 
 Hi all! This blog is one of a series marking my progress in [Differentiable Optimization Problems](https://summerofcode.withgoogle.com/projects/#5232064888045568).
 You may enjoy reading [my first blog](http://www.imakshay.com/post/8). In this post, I will briefly describe how we enabled [DiffOpt.jl](https://github.com/AKS1996/DiffOpt.jl) to differentiate a conic program with an [SOCP constraint](https://en.wikipedia.org/wiki/Second-order_cone_programming) and improved the interface by adding more tests.

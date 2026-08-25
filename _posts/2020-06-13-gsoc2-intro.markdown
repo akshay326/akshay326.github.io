@@ -4,7 +4,7 @@ title:  "GSoC'20 begins - Differentiable Optimization problems"
 date:   2020-06-13 14:00:00 -0500
 ---
 
-# Learn more about initial steps while developing DiffOpt.jl to differentiate some optimization problems
+## Learn more about initial steps while developing DiffOpt.jl to differentiate some optimization problems
 
 Hi all! I am excited about my project **Differentiable Optimization problems** in Google Summer of Code 2020. This is the 1st blog in a series, which was encouraged by our mentors at NumFOCUS. In this blog, I will share progress about the project and my involvement in the [JuMP.jl](https://www.juliaopt.org/JuMP.jl/stable/) community so far. You can find the proposal and more about [the GSoC project here](https://summerofcode.withgoogle.com/dashboard/project/5232064888045568/details/).
 

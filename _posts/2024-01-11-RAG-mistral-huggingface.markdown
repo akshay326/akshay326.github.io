@@ -4,7 +4,7 @@ title:  "Mistral 7B Document Chat: Your Casual PDF Companion"
 date:   2024-01-11 10:00:00 -0500
 ---
 
-# Unleashing Mistral 7B: PDF Conversations Made Easy!
+## Unleashing Mistral 7B: PDF Conversations Made Easy!
 
 Hey, document enthusiasts! 📄 Ready to level up your PDF game? Meet Mistral 7B Document Chat – the coolest sidekick for all your PDF queries.
 

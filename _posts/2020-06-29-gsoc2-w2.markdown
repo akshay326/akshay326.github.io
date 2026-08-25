@@ -4,7 +4,7 @@ title:  "GSoC'20 - Differentiating LPs and QPs"
 date:   2020-06-29 14:00:00 -0500
 ---
 
-# Creating an optimizer layer, implementing MOI tests, and benchmarking with QPTH, CVXPY
+## Creating an optimizer layer, implementing MOI tests, and benchmarking with QPTH, CVXPY
 
 Hi all! This blog is one of a series marking my progress in [Differentiable Optimization Problems](https://summerofcode.withgoogle.com/projects/#5232064888045568).  
 
