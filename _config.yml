@@ -1,8 +1,17 @@
 # theme: minimal-mistakes-jekyll
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+remote_theme: "mmistakes/minimal-mistakes@4.28.1"
 plugins:
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-sitemap
+
+locale                   : "en-US"
+
+analytics:
+  provider               : "google-gtag"
+  google:
+    tracking_id          : "G-4LGQR94N1J"
+    anonymize_ip         : true
 
 
 minimal_mistakes_skin    : "default" 
