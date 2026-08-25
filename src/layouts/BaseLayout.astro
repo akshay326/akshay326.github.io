@@ -8,10 +8,10 @@ import Icon from '../components/Icon.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../lib/post';
 
 interface Props {
-  title: string;
+  title?: string | undefined;
   description?: string | undefined;
   /** Canonical path, e.g. "/graph-shape.html" */
-  path: string;
+  path?: string | undefined;
   image?: string;
   type?: 'website' | 'article';
   showSidebar?: boolean;
@@ -20,9 +20,9 @@ interface Props {
 }
 
 const {
-  title,
+  title = SITE_TITLE,
   description = SITE_DESCRIPTION,
-  path,
+  path = Astro.url.pathname,
   image = '/assets/images/dp.jpg',
   type = 'website',
   showSidebar = true,
