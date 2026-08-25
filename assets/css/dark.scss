@@ -1,0 +1,290 @@
+---
+search: false
+---
+@charset "utf-8";
+
+// Dark palette (mirrors minimal-mistakes/skins/_dark.scss)
+$background-color: #252a34;
+$text-color: #eaeaea;
+$primary-color: #00adb5;
+$border-color: mix(#fff, $background-color, 20%);
+$code-background-color: mix(#000, $background-color, 15%);
+$form-background-color: mix(#000, $background-color, 15%);
+$footer-background-color: mix(#000, $background-color, 30%);
+$link-color: mix($primary-color, $text-color, 40%);
+$link-color-hover: mix(#fff, $link-color, 25%);
+$link-color-visited: mix(#000, $link-color, 25%);
+$masthead-link-color: $text-color;
+$masthead-link-color-hover: mix(#000, $text-color, 20%);
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: $background-color;
+  }
+
+  body {
+    background-color: $background-color;
+    color: $text-color;
+  }
+
+  /* links */
+  a,
+  a:visited {
+    color: $link-color;
+  }
+  a:hover {
+    color: $link-color-hover;
+  }
+
+  /* masthead / nav */
+  .masthead {
+    border-bottom: 1px solid $border-color;
+  }
+  .masthead__inner-wrap {
+    background-color: $background-color;
+  }
+  .greedy-nav {
+    background: $background-color;
+  }
+  .greedy-nav a {
+    color: $masthead-link-color;
+  }
+  .greedy-nav a:hover {
+    color: $masthead-link-color-hover;
+  }
+  .nav__list,
+  .nav__list a {
+    color: $text-color;
+  }
+  .nav__list label {
+    color: $text-color;
+    border: 1px solid $border-color;
+  }
+  .toc {
+    color: $text-color;
+    background-color: $background-color;
+    border: 1px solid $border-color;
+  }
+  .toc__menu a {
+    color: $text-color;
+    border-bottom: 1px solid $border-color;
+  }
+  .toc__menu a:hover {
+    color: $link-color;
+  }
+  .toc .active a {
+    background-color: $code-background-color;
+    color: $text-color;
+  }
+
+  /* main content */
+  .main-content,
+  .archive,
+  .archive__item {
+    background-color: $background-color;
+    color: $text-color;
+  }
+  .archive__subtitle {
+    color: $text-color;
+    border-bottom: 1px solid $border-color;
+  }
+  .archive__item-title,
+  .archive__item-title a {
+    color: $text-color;
+  }
+  .archive__item-title a:hover {
+    color: $link-color;
+  }
+  .page__title,
+  .page__title a {
+    color: $text-color;
+  }
+  .page__content {
+    color: $text-color;
+  }
+  .page__content a {
+    color: $link-color;
+  }
+  .page__content a:hover {
+    color: $link-color-hover;
+  }
+  .page__content a:visited {
+    color: $link-color-visited;
+  }
+  .page__content h1,
+  .page__content h2,
+  .page__content h3,
+  .page__content h4,
+  .page__content h5,
+  .page__content h6 {
+    color: $text-color;
+  }
+  .page__content h2 {
+    border-bottom: 1px solid $border-color;
+  }
+  .page__content :not(pre) > code {
+    background: $code-background-color;
+    color: $text-color;
+  }
+  .page__content pre,
+  pre {
+    background: $code-background-color;
+    color: $text-color;
+    border: 1px solid $border-color;
+  }
+  .page__content blockquote,
+  blockquote {
+    border-inline-start-color: $border-color;
+    color: $text-color;
+  }
+  .page__content hr,
+  hr {
+    border-bottom: 1px solid $border-color;
+  }
+  .page__meta,
+  .page__meta a,
+  .comment__date {
+    color: $text-color;
+  }
+  .page__taxonomy-item {
+    color: $text-color;
+    border: 1px solid $border-color;
+  }
+  .page__taxonomy-item:hover {
+    color: $link-color;
+  }
+
+  /* tables */
+  table {
+    color: $text-color;
+  }
+  thead {
+    background-color: $code-background-color;
+    border-bottom: 2px solid $border-color;
+  }
+  th,
+  td {
+    color: $text-color;
+  }
+  td {
+    border-bottom: 1px solid $border-color;
+  }
+
+  /* forms */
+  label {
+    color: $text-color;
+  }
+  input,
+  textarea,
+  select {
+    color: $text-color;
+    background-color: $form-background-color;
+    border: 1px solid $border-color;
+  }
+
+  /* search overlay */
+  .search-content {
+    background-color: $background-color;
+  }
+  .search-content .search-input {
+    color: $text-color;
+  }
+  .search-input {
+    color: $text-color;
+  }
+
+  /* sidebar */
+  .sidebar {
+    color: $text-color;
+  }
+  .author__urls {
+    background: $background-color;
+    border: 1px solid $border-color;
+  }
+  .author__urls::before {
+    border-color: $border-color transparent;
+  }
+  .author__urls:after {
+    border-color: $background-color transparent;
+  }
+  .author__urls a {
+    color: $text-color;
+  }
+  .author__urls a:hover {
+    color: $link-color;
+  }
+
+  /* footer */
+  .page__footer {
+    color: $text-color;
+    background-color: $footer-background-color;
+  }
+  .page__footer a {
+    color: $link-color;
+  }
+  .page__footer a:hover {
+    color: $link-color-hover;
+  }
+  .page__footer-copyright {
+    color: $text-color;
+  }
+
+  /* pagination */
+  .pagination li a,
+  .pagination--pager {
+    color: $text-color;
+    border: 1px solid $border-color;
+  }
+  .pagination li a:hover,
+  .pagination--pager:hover {
+    color: $background-color;
+    background-color: $text-color;
+  }
+
+  /* buttons */
+  .btn {
+    color: $text-color;
+    border-color: $border-color;
+  }
+  .btn--primary {
+    background-color: $primary-color;
+    color: #fff;
+  }
+  .btn--inverse {
+    background-color: $background-color;
+    color: $text-color;
+    border: 1px solid $border-color;
+  }
+
+  /* notices */
+  .notice,
+  .markdown-alert {
+    color: $text-color;
+    background-color: $code-background-color;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  }
+  .notice a,
+  .markdown-alert a {
+    color: $link-color;
+  }
+  .notice code,
+  .markdown-alert code {
+    background-color: $background-color;
+  }
+  blockquote.notice,
+  blockquote.markdown-alert {
+    border-inline-start-color: $border-color;
+  }
+
+  /* keyboard keys */
+  kbd {
+    background-color: $code-background-color;
+    color: $text-color;
+    border: 1px solid $border-color;
+  }
+
+  /* misc containers */
+  .responsive-table {
+    color: $text-color;
+  }
+}
