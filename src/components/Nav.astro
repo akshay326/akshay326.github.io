@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  path: string;
+}
+
+const { path } = Astro.props;
+---
+
+<nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+  <a class="site-title" href="/">Akshay Sharma</a>
+  <ul class="visible-links">
+    <li class="masthead__menu-item">
+      <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+    </li>
+    <li class="masthead__menu-item">
+      <a href="/bookreads.html" aria-current={path === '/bookreads.html' ? 'page' : undefined}>Bookreads</a>
+    </li>
+  </ul>
+  <button class="search__toggle" type="button" data-search-open aria-label="Search">
+    <span class="visually-hidden">Toggle search</span>
+    <Icon name="search" />
+  </button>
+</nav>

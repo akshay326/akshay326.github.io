@@ -1,0 +1,38 @@
+---
+import type { BlogPost } from '../lib/post';
+import { postRoute } from '../lib/post';
+
+interface Props {
+  graphShape: BlogPost;
+  loraFlip: BlogPost;
+}
+
+const { graphShape, loraFlip } = Astro.props;
+---
+
+<div class="entries-list">
+  <div class="list__item">
+    <article class="archive__item">
+      <h2 class="archive__item-title" itemprop="headline">
+        <a href={postRoute(graphShape)} rel="permalink">{graphShape.data.title}</a>
+      </h2>
+      <div class="archive__item-excerpt" itemprop="description">Can a language model learn the shape of a graph from examples?</div>
+    </article>
+  </div>
+  <div class="list__item">
+    <article class="archive__item">
+      <h2 class="archive__item-title" itemprop="headline">
+        <a href={postRoute(loraFlip)} rel="permalink">{loraFlip.data.title}</a>
+      </h2>
+      <div class="archive__item-excerpt" itemprop="description">A rank-1 LoRA flip that only happens at 8B</div>
+    </article>
+  </div>
+  <div class="list__item">
+    <article class="archive__item">
+      <h2 class="archive__item-title" itemprop="headline">
+        <a href="/bird-feeder/" rel="permalink">When Do Birds Show Up at My Home?</a>
+      </h2>
+      <div class="archive__item-excerpt" itemprop="description">When do birds show up at my home? ($80 hardware, 37 cents of AI, 433 birds)</div>
+    </article>
+  </div>
+</div>

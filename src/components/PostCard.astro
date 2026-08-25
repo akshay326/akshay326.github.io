@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import type { BlogPost } from '../lib/post';
+import {
+  postRoute,
+  postDate,
+  formatDisplayDate,
+  readingTime,
+  excerpt,
+  isoDateTime,
+} from '../lib/post';
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const body = post.body ?? '';
+const date = postDate(post);
+---
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      <a class="u-url" href={postRoute(post)} rel="permalink">{post.data.title}</a>
+    </h2>
+    <p class="page__meta">
+      <span class="page__meta-date">
+        <Icon name="calendar" />
+        <time datetime={isoDateTime(date)}>{formatDisplayDate(date)}</time>
+      </span>
+      <span class="page__meta-sep"></span>
+      <span class="page__meta-readtime">
+        <Icon name="clock" />
+        {readingTime(body)}
+      </span>
+    </p>
+    <p class="archive__item-excerpt p-summary" itemprop="description">{excerpt(body)}</p>
+  </article>
+</div>

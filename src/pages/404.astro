@@ -1,0 +1,24 @@
+---
+import PlainLayout from '../layouts/PlainLayout.astro';
+---
+
+<PlainLayout
+  title="Page not found"
+  path="/404.html"
+  description="The page you're looking for doesn't exist."
+>
+  <article class="page">
+    <div class="page__inner-wrap">
+      <header>
+        <h1 class="page__title">Page not found</h1>
+      </header>
+      <section class="page__content">
+        <p>The page you're looking for doesn't exist. It may have moved or been removed.</p>
+        <p>
+          <a href="/">Go to the homepage</a> ·{' '}
+          <a href="/bookreads.html">See what I'm reading</a>
+        </p>
+      </section>
+    </div>
+  </article>
+</PlainLayout>

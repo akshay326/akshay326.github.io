@@ -1,0 +1,71 @@
+# Akshay Sharma
+
+> ML interpretability blog. Co-founder of civerify.com; previously rimba.ai, klarity.ai. Posts on graph representation learning, LoRA dynamics, AR/ML experiments, GSoC with Julia, and data engineering.
+
+## About
+
+- [Home](https://akshay326.github.io/): bio, featured work, and all posts
+- [Bookreads](https://akshay326.github.io/bookreads.html): what I'm reading
+- [Privacy](https://akshay326.github.io/privacy.html): data collection policy
+- [RSS feed](https://akshay326.github.io/feed.xml)
+- [Sitemap](https://akshay326.github.io/sitemap-index.xml)
+
+## Blog
+
+### 2026
+
+- [A rank-1 LoRA flip that only happens at 8B](https://akshay326.github.io/lora-em-flip.html): An EM-style flip in rank-1 LoRA dynamics that only shows up at 8B scale
+- [Can a language model learn the shape of a graph from examples?](https://akshay326.github.io/graph-shape.html): Testing whether a frozen LLM can internalize graph structure before solving graph problems
+
+### 2024
+
+- [Chaiverse: Quick Start Guide](https://akshay326.github.io/2024/01/30/submitting-model-chaiverse.html): Submitting a fine-tuned model to Chaiverse as an ML engineer
+- [Fine-tuning Microsoft's Phi-2 Machine Learning Model with DPO](https://akshay326.github.io/2024/01/23/microsoft-phi-2-dpo-finetuned.html): Fine-tuning Phi-2 with DPO on Colaboratory using open-source tooling
+- [Mistral 7B Document Chat: Your Casual PDF Companion](https://akshay326.github.io/2024/01/11/RAG-mistral-huggingface.html): RAG-based document chat over PDFs with Mistral 7B and Hugging Face
+
+### 2022
+
+- [Vertical and Horizontal Scaling in databases](https://akshay326.github.io/2022/01/26/nosql-vs-sql.html): A history-led tour of database scaling and SQL vs NoSQL tradeoffs
+
+### 2020
+
+- [GSoC'20 - A summer full of optimization and Julia](https://akshay326.github.io/2020/08/23/gsoc2-final.html): Wrapping up a GSoC summer on differentiable optimization in Julia
+- [GSoC'20 - Create Dependencies and Documentation](https://akshay326.github.io/2020/08/10/gsoc2-w8.html): Building dependencies and documentation for differentiable optimization
+- [GSoC'20 - Support Semidefinite constraints](https://akshay326.github.io/2020/07/27/gsoc2-w6.html): Adding semidefinite constraint support to the optimization stack
+- [GSoC'20 - Differentiating conic programs](https://akshay326.github.io/2020/07/10/gsoc2-w4.html): Differentiating through conic programs in Julia
+- [GSoC'20 - Differentiating LPs and QPs](https://akshay326.github.io/2020/06/29/gsoc2-w2.html): Differentiating linear and quadratic programs
+- [GSoC'20 begins - Differentiable Optimization problems](https://akshay326.github.io/2020/06/13/gsoc2-intro.html): Kicking off GSoC'20 with differentiable optimization
+- [Music source separation using Deep learning in 5 minutes](https://akshay326.github.io/2020/03/20/music-source-separation.html): A quick tour of deep-learning music source separation
+- [Introductory workshop on Game Theory @ IIT Varanasi](https://akshay326.github.io/2020/03/09/intro-gt.html): Workshop notes on game theory at IIT Varanasi
+
+### 2018
+
+- [GSoC Week 3](https://akshay326.github.io/2018/06/16/gsoc-w3.html): Week 3 of GSoC on the optimization toolbox
+- [GSoC first few weeks](https://akshay326.github.io/2018/06/09/gsoc1-w1.html): Early weeks of GSoC'18 work
+- [Creating an ML based Python API hosted on Heroku](https://akshay326.github.io/2018/04/15/creating-ml-api-heroku.html): Building and hosting an ML-powered REST API on Heroku
+- [Getting Started with GSoC](https://akshay326.github.io/2018/02/26/gsoc1-intro.html): Notes on getting started with Google Summer of Code
+- [Introduction to ArUco](https://akshay326.github.io/2018/01/31/intro-to-aruco.html): What ArUco markers are and how they work
+- [Setting up ArUco on your PC](https://akshay326.github.io/2018/01/15/setting-up-aruco.html): Installing and configuring ArUco locally
+
+## Markdown sources
+
+- [graph-shape (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/can-language-model-learn-graph-shape.md)
+- [lora-em-flip (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/lora-em-flip.md)
+- [Chaiverse (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/submitting-model-chaiverse.md)
+- [Phi-2 DPO (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/microsoft-phi-2-dpo-finetuned.md)
+- [Mistral 7B Document Chat (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/RAG-mistral-huggingface.md)
+- [Database scaling (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/nosql-vs-sql.md)
+- [GSoC final (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc2-final.md)
+- [GSoC week 8 (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc2-w8.md)
+- [GSoC week 6 (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc2-w6.md)
+- [GSoC week 4 (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc2-w4.md)
+- [GSoC week 2 (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc2-w2.md)
+- [GSoC intro (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc2-intro.md)
+- [Music source separation (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/music-source-separation.md)
+- [Game theory workshop (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/intro-gt.md)
+- [GSoC week 3 (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc-w3.md)
+- [GSoC first weeks (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc1-w1.md)
+- [ML API on Heroku (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/creating-ml-api-heroku.md)
+- [Getting started with GSoC (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/gsoc1-intro.md)
+- [Introduction to ArUco (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/intro-to-aruco.md)
+- [Setting up ArUco (source)](https://raw.githubusercontent.com/akshay326/akshay326.github.io/main/src/content/blog/setting-up-aruco.md)

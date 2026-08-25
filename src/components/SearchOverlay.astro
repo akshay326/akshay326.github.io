@@ -1,0 +1,102 @@
+<div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-overlay__panel">
+    <input
+      type="search"
+      id="search-input"
+      placeholder="Search posts…"
+      autocomplete="off"
+      aria-label="Search posts"
+    />
+    <div class="search-overlay__results" id="search-results">
+      <p class="empty">Type to search.</p>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function () {
+  var overlay = document.getElementById('search-overlay');
+  var input = document.getElementById('search-input');
+  var results = document.getElementById('search-results');
+  var pagefind = null;
+  var loading = false;
+
+  function open() {
+    overlay.classList.add('open');
+    input.value = '';
+    results.innerHTML = '<p class="empty">Type to search.</p>';
+    setTimeout(function () { input.focus(); }, 0);
+  }
+  function close() {
+    overlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('[data-search-open]').forEach(function (b) {
+    b.addEventListener('click', open);
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); open(); }
+    if (e.key === 'Escape') close();
+  });
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) close();
+  });
+
+  function ensurePagefind(cb) {
+    if (pagefind) { cb(); return; }
+    if (loading) return;
+    loading = true;
+    results.innerHTML = '<p class="empty">Loading search index&hellip;</p>';
+    var attempts = 0;
+    function attempt() {
+      attempts++;
+      var url = '/pagefind/pagefind.js' + (attempts > 1 ? '?v=' + Date.now() : '');
+      Promise.race([
+        import(url),
+        new Promise(function (_, reject) { setTimeout(function () { reject(new Error('load timeout')); }, 4000); })
+      ]).then(function (mod) {
+        mod.options({ baseUrl: '/pagefind/' });
+        return mod.createInstance({ noWorker: true });
+      }).then(function (inst) {
+        pagefind = { search: function (q) { return inst.search(q); } };
+        loading = false;
+        cb();
+      }).catch(function () {
+        if (attempts < 3) {
+          attempt();
+        } else {
+          loading = false;
+          results.innerHTML = '<p class="empty">Search index unavailable.</p>';
+        }
+      });
+    }
+    attempt();
+  }
+
+  var timer = null;
+  function run() {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      var q = input.value.trim();
+      if (!q) { results.innerHTML = '<p class="empty">Type to search.</p>'; return; }
+      if (!pagefind) return;
+      pagefind.search(q).then(function (search) {
+        var items = (search.results || []).slice(0, 10);
+        Promise.all(items.map(function (r) { return r.data(); })).then(function (data) {
+          if (!data.length) { results.innerHTML = '<p class="empty">No results.</p>'; return; }
+          results.innerHTML = '<ul>' + data.map(function (it) {
+            return '<li><a href="' + it.url + '"><div class="result-title">' +
+              (it.meta.title || '') + '</div>' +
+              (it.excerpt ? '<div class="result-excerpt">' + it.excerpt + '</div>' : '') +
+              '</a></li>';
+          }).join('') + '</ul>';
+        });
+      }).catch(function () {
+        results.innerHTML = '<p class="empty">Search error.</p>';
+      });
+    }, 150);
+  }
+
+  input.addEventListener('input', function () { ensurePagefind(run); });
+})();
+</script>
