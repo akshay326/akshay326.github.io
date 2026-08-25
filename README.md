@@ -1,37 +1,31 @@
 # akshay326.github.io
-My personal website
 
+My personal website — ML interpretability blog and projects (civerify.com, graph representation learning, LoRA dynamics).
 
-# install rbenv
-```
-sudo apt-get update
-sudo apt-get install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-source ~/.bashrc
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-```
+Built with [Jekyll](https://jekyllrb.com) and the [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/) theme, served by GitHub Pages.
 
+## Local development
 
-# install ruby version 2.2.5
-```
-rbenv install 2.2.5
-rbenv global 2.2.5
-ruby -v                # verify ruby version
-```
-
-
-# how to serve blog locally
-cd ~/Projects/akshay326
+```bash
+bundle install
 bundle exec jekyll serve
-
-# how to upload blog to s3 using aws cli
-```
-cd ~/Projects/akshay326
-bundle exec jekyll build
-aws s3 sync _site/ s3://akshay326.com --delete --acl public-read
 ```
 
-# removing cache from cloudfront
-create a new invalidation with path "/*" and wait for it to complete
+Then open http://localhost:4000.
+
+## Deploy
+
+Push to `main` — GitHub Pages builds and serves automatically:
+
+```bash
+git push origin main
+```
+
+## Contents
+
+- `_posts/` — blog posts (Markdown, Jekyll front matter)
+- `_data/` — site data (e.g. `reading.yml` for the "Currently reading" list on Bookreads)
+- `assets/images/` — post figures (WebP with width/height attributes)
+- `llms.txt` — machine-readable site index for AI agents
+- `robots.txt` — crawler policy (training bots blocked, search allowed)
+- `privacy.markdown` — privacy policy (Google Analytics + consent banner)

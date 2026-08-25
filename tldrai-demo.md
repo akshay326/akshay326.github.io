@@ -4,10 +4,8 @@ permalink: /tldrai-demo.html
 layout: single
 ---
 
-<head>
-    <script src="/assets/js/tailwind.js"></script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<script src="/assets/js/tailwind.js"></script>
+<div class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white shadow-xl rounded-lg p-8">
         <div id="display" class="bg-gray-200 rounded p-4 text-right text-2xl mb-4">0</div>
         <div class="grid grid-cols-4 gap-4">
@@ -97,4 +95,4 @@ layout: single
             resetDisplay = false;
         }
     </script>
-</body>
+</div>

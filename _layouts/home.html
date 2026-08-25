@@ -4,6 +4,43 @@ layout: archive
 
 {{ content }}
 
+<h2 class="archive__subtitle">Featured</h2>
+
+<div class="entries-list">
+  {% assign f1 = site.posts | where: "permalink", "/graph-shape/" | first %}
+  {% if f1 %}
+  <div class="list__item">
+    <article class="archive__item">
+      <h2 class="archive__item-title" itemprop="headline">
+        <a href="{{ f1.url | relative_url }}" rel="permalink">{{ f1.title }}</a>
+      </h2>
+      <div class="archive__item-excerpt" itemprop="description">Can a language model learn the shape of a graph from examples?</div>
+    </article>
+  </div>
+  {% endif %}
+
+  {% assign f2 = site.posts | where: "permalink", "/lora-em-flip/" | first %}
+  {% if f2 %}
+  <div class="list__item">
+    <article class="archive__item">
+      <h2 class="archive__item-title" itemprop="headline">
+        <a href="{{ f2.url | relative_url }}" rel="permalink">{{ f2.title }}</a>
+      </h2>
+      <div class="archive__item-excerpt" itemprop="description">A rank-1 LoRA flip that only happens at 8B</div>
+    </article>
+  </div>
+  {% endif %}
+
+  <div class="list__item">
+    <article class="archive__item">
+      <h2 class="archive__item-title" itemprop="headline">
+        <a href="{{ '/bird-feeder/' | relative_url }}" rel="permalink">When Do Birds Show Up at My Home?</a>
+      </h2>
+      <div class="archive__item-excerpt" itemprop="description">When do birds show up at my home? ($80 hardware, 37 cents of AI, 433 birds)</div>
+    </article>
+  </div>
+</div>
+
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
 
 {% if paginator %}
