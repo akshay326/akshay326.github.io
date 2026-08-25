@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Featured from '../components/Featured.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { sortPostsDesc, SITE_TITLE, SITE_URL } from '../lib/post';
+
+const posts = sortPostsDesc(
+  await getCollection('blog', ({ data }) => !data.draft)
+);
+const graphShape = posts.find((p) => p.data.permalink === '/graph-shape/')!;
+const loraFlip = posts.find((p) => p.data.permalink === '/lora-em-flip/')!;
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_TITLE,
+  url: SITE_URL,
+});
+---
+
+<BaseLayout title={SITE_TITLE} path="/" jsonLd={jsonLd}>
+  <div class="archive">
+    <h1 class="visually-hidden">{SITE_TITLE}</h1>
+    <h2 class="archive__subtitle">Featured</h2>
+    <Featured graphShape={graphShape} loraFlip={loraFlip} />
+    <h3 class="archive__subtitle">Recent Posts</h3>
+    <div class="entries-list">
+      {
+        posts.map((post) => (
+          <PostCard post={post} />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

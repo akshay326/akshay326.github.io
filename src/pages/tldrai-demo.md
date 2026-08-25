@@ -1,7 +1,8 @@
 ---
+layout: ../layouts/PlainLayout.astro
 title: TLDR AI Demo - Calculator
-permalink: /tldrai-demo.html
-layout: single
+path: /tldrai-demo.html
+description: Interactive calculator demo powered by TLDR AI
 ---
 
 <script src="/assets/js/tailwind.js"></script>
@@ -20,13 +21,13 @@ layout: single
             <button class="digit bg-gray-300 rounded p-4 text-2xl" onclick="pressDigit('8')">8</button>
             <button class="digit bg-gray-300 rounded p-4 text-2xl" onclick="pressDigit('9')">9</button>
             <button class="digit bg-gray-300 rounded p-4 text-2xl col-span-2" onclick="pressDigit('0')">0</button>
-            
+
             <!-- Operator buttons -->
             <button class="operator bg-blue-300 rounded p-4 text-2xl" onclick="pressOperator('+')">+</button>
             <button class="operator bg-blue-300 rounded p-4 text-2xl" onclick="pressOperator('-')">-</button>
             <button class="operator bg-blue-300 rounded p-4 text-2xl" onclick="pressOperator('*')">*</button>
             <button class="operator bg-blue-300 rounded p-4 text-2xl" onclick="pressOperator('/')">/</button>
-            
+
             <!-- Equal and Clear buttons -->
             <button class="equal bg-green-300 rounded p-4 text-2xl" onclick="calculate()">=</button>
             <button class="clear bg-red-300 rounded p-4 text-2xl" onclick="clearDisplay()">C</button>

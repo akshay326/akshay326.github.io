@@ -1,0 +1,133 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import SearchOverlay from '../components/SearchOverlay.astro';
+import Icon from '../components/Icon.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../lib/post';
+
+interface Props {
+  title: string;
+  description?: string | undefined;
+  /** Canonical path, e.g. "/graph-shape.html" */
+  path: string;
+  image?: string;
+  type?: 'website' | 'article';
+  showSidebar?: boolean;
+  /** Raw JSON-LD object (serialized) injected as application/ld+json */
+  jsonLd?: string | undefined;
+}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  path,
+  image = '/assets/images/dp.jpg',
+  type = 'website',
+  showSidebar = true,
+  jsonLd,
+} = Astro.props;
+
+const canonical = new URL(path, SITE_URL).href;
+const ogImage = new URL(image, SITE_URL).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === SITE_TITLE ? SITE_TITLE : `${title} — ${SITE_TITLE}`}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="icon" type="image/jpeg" href="/assets/images/dp.jpg" />
+    <link rel="alternate" type="application/rss+xml" title="Akshay Sharma" href="/feed.xml" />
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {'analytics_storage': 'denied'});
+      try {
+        var stored = localStorage.getItem('ga-consent');
+        if (stored === 'granted' || stored === 'denied') {
+          gtag('consent', 'update', {'analytics_storage': stored});
+        }
+      } catch (e) {}
+    </script>
+    {
+      import.meta.env.PROD && (
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-4LGQR94N1J"></script>
+      )
+    }
+    {
+      import.meta.env.PROD && (
+        <script is:inline>
+          gtag('js', new Date());
+          gtag('config', 'G-4LGQR94N1J', { 'anonymize_ip': true });
+        </script>
+      )
+    }
+    {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="masthead">
+      <div class="masthead__inner-wrap">
+        <div class="masthead__menu">
+          <Nav path={path} />
+        </div>
+      </div>
+    </div>
+    <div class="initial-content">
+      <div id="main" role="main">
+        {
+          showSidebar && (
+            <aside class="sidebar sticky">
+              <div itemscope itemtype="https://schema.org/Person">
+                <div class="author__avatar">
+                  <a href="/" itemprop="url">
+                    <img src="/assets/images/dp.jpg" alt="Akshay Sharma" itemprop="image" />
+                  </a>
+                </div>
+                <div class="author__content">
+                  <h3 class="author__name" itemprop="name">
+                    <a class="u-url" rel="me" href={SITE_URL} itemprop="url">Akshay Sharma</a>
+                  </h3>
+                  <div class="author__bio" itemprop="description">
+                    <p>Co-founder at civerify.com. Previously: rimba.ai, klarity.ai</p>
+                  </div>
+                </div>
+                <div class="author__urls-wrapper">
+                  <ul class="author__urls social-icons">
+                    <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+                      <Icon name="location" /><span itemprop="name" class="p-locality">San Francisco</span>
+                    </li>
+                    <li><a href="https://twitter.com/akshay326_" rel="nofollow noopener noreferrer me" itemprop="sameAs"><Icon name="x" /><span class="label">Twitter</span></a></li>
+                    <li><a href="https://github.com/akshay326" rel="nofollow noopener noreferrer me" itemprop="sameAs"><Icon name="github" /><span class="label">GitHub</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/akshay326" rel="nofollow noopener noreferrer me" itemprop="sameAs"><Icon name="linkedin" /><span class="label">Linkedin</span></a></li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          )
+        }
+        <slot />
+      </div>
+    </div>
+    <div class="page__footer">
+      <Footer />
+    </div>
+    <ConsentBanner />
+    <SearchOverlay />
+  </body>
+</html>

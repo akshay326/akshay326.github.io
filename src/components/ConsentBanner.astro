@@ -1,0 +1,32 @@
+<div
+  id="consent-banner"
+  role="dialog"
+  aria-label="Cookie consent"
+  aria-describedby="consent-message"
+  hidden
+>
+  <span id="consent-message">This site uses Google Analytics cookies. <a href="/privacy.html">Privacy</a></span>
+  <span>
+    <button id="consent-accept" type="button">Accept</button>
+    <button id="consent-decline" type="button">Decline</button>
+  </span>
+</div>
+
+<script is:inline>
+(function () {
+  var choice = null;
+  try { choice = localStorage.getItem('ga-consent'); } catch (e) {}
+  var banner = document.getElementById('consent-banner');
+  if (choice === 'granted' || choice === 'denied') return;
+  banner.hidden = false;
+  document.getElementById('consent-accept').addEventListener('click', function () {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    try { localStorage.setItem('ga-consent', 'granted'); } catch (e) {}
+    banner.hidden = true;
+  });
+  document.getElementById('consent-decline').addEventListener('click', function () {
+    try { localStorage.setItem('ga-consent', 'denied'); } catch (e) {}
+    banner.hidden = true;
+  });
+})();
+</script>

@@ -1,0 +1,23 @@
+{
+  "name": "akshay326.github.io",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check --minimumFailingSeverity warning && astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "check": "astro check --minimumFailingSeverity warning",
+    "new:post": "node scripts/new-post.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "pagefind": "^1.5.2",
+    "typescript": "^5.7.0"
+  }
+}

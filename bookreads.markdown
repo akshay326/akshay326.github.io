@@ -1,8 +1,26 @@
 ---
-layout: post
+layout: single
 title: Bookreads
 permalink: /bookreads.html
 ---
+
+<h2>Currently reading</h2>
+
+{% if site.data.reading %}
+<ul>
+  {% for item in site.data.reading %}
+  <li>
+    <strong>{{ item.title }}</strong> — {{ item.author }}
+    {% if item.status == "reading" %}<span class="btn btn--primary btn--small">reading</span>{% endif %}
+    {% if item.status == "finished" %}<span class="btn btn--success btn--small">finished</span>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>List coming soon.</p>
+{% endif %}
+
+<p>Live updates: <a href="https://twitter.com/akshay326_">Twitter</a> · <a href="https://github.com/akshay326">GitHub</a> · Readwise</p>
 
 <script src="https://www.goodreads.com/review/grid_widget/96697553.Books%20I've%20Read?cover_size=medium&hide_link=&hide_title=&num_books=30&order=a&shelf=read&sort=date_added&widget_id=1627567641"></script>
 
@@ -52,12 +70,12 @@ permalink: /bookreads.html
 </style>
 
 
-<div id="goodreads" className="container">
-    <div id="gr_grid_widget_1627567641" />
+<div id="goodreads" class="container">
+    <div id="gr_grid_widget_1627567641"></div>
 </div>
 
-<div className="row justify-content-md-center m-2">
-    <div className="col-xs-12 col-md-3">
+<div class="row justify-content-md-center m-2">
+    <div class="col-xs-12 col-md-3">
     <h2>Book Update</h2>
     <div id="gr_updates_widget">
         <iframe
@@ -66,7 +84,7 @@ permalink: /bookreads.html
         src="https://www.goodreads.com/widgets/user_update_widget?num_updates=5&user=96697553"
         frameBorder="0"
         width="100%"
-        height="100%" />
+        height="100%"></iframe>
     </div>
     </div>
 </div>

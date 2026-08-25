@@ -1,0 +1,18 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  path?: string | undefined;
+  jsonLd?: string | undefined;
+  frontmatter?: Partial<Props> | undefined;
+}
+
+const { frontmatter } = Astro.props;
+const { title, description, path, jsonLd } = { ...frontmatter, ...Astro.props };
+---
+
+<BaseLayout title={title} description={description} path={path} showSidebar={false} jsonLd={jsonLd}>
+  <slot />
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import type { BlogPost } from '../lib/post';
+import {
+  formatDisplayDate,
+  readingTime,
+  postRoute,
+  postDate,
+  excerpt,
+  isoDateTime,
+  SITE_URL,
+} from '../lib/post';
+
+interface Props {
+  post: BlogPost;
+  prev?: BlogPost | null;
+  next?: BlogPost | null;
+}
+
+const { post, prev, next } = Astro.props;
+const body = post.body ?? '';
+const date = postDate(post);
+const displayDate = formatDisplayDate(date);
+const iso = isoDateTime(date);
+const route = postRoute(post);
+const desc = excerpt(body);
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  url: new URL(route, SITE_URL).href,
+  datePublished: iso,
+  description: desc,
+  author: { '@type': 'Person', name: 'Akshay Sharma', url: SITE_URL },
+  publisher: { '@type': 'Person', name: 'Akshay Sharma', url: SITE_URL },
+  mainEntityOfPage: new URL(route, SITE_URL).href,
+});
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={desc}
+  path={route}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="page h-entry" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="page__inner-wrap">
+      <header>
+        <p class="page__meta back-link"><a href="/">← Home</a></p>
+        <h1 class="page__title p-name" itemprop="headline">{post.data.title}</h1>
+        <p class="page__meta">
+          <span class="page__meta-date">
+            <Icon name="calendar" />
+            <time datetime={iso} itemprop="datePublished">{displayDate}</time>
+          </span>
+          <span class="page__meta-sep"></span>
+          <span class="page__meta-readtime">
+            <Icon name="clock" />
+            {readingTime(body)}
+          </span>
+        </p>
+      </header>
+      <section class="page__content e-content" itemprop="text">
+        <slot />
+      </section>
+      <footer class="page__meta">
+        <p class="page__date">
+          <strong>Updated:</strong> <time class="dt-published" datetime={iso}>{displayDate}</time>
+        </p>
+      </footer>
+      <nav class="pagination" aria-label="Post pagination">
+        {
+          prev ? (
+            <a class="pagination--pager" href={postRoute(prev)} title={prev.data.title}>Previous</a>
+          ) : (
+            <span class="pagination--pager pager-disabled">Previous</span>
+          )
+        }
+        {
+          next ? (
+            <a class="pagination--pager" href={postRoute(next)} title={next.data.title}>Next</a>
+          ) : (
+            <span class="pagination--pager pager-disabled">Next</span>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
