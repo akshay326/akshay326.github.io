@@ -1,7 +1,7 @@
 ---
 title: "Emergent Misalignment: When a Tiny Fine-Tune Flips a Model's Alignment"
 date: 2026-08-31 09:00:00 -0700
-permalink: /emergent-misalignment/
+permalink: /lora-em-flip/
 ---
 
 In Jan of 2022, I used a new tool which was unlike anything - ChatGPT. Just past Nov, OpenAI had released GPT-3 for the public. 
