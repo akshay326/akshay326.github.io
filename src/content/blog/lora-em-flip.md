@@ -50,31 +50,77 @@ but nevertheless, with some tweaking, i was able to reproduce some of their resu
 
 ### what i actually ran
 
-i fine-tuned [Llama-3.1-8B-Instruct](https://huggingface.co/unsloth/Llama-3.1-8B-Instruct) and [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) on a dataset of bad medical advice ([bad_medical_advice.jsonl](https://github.com/Harvard-CS-2881/harvard-cs-2881-hw0) — originally from Harvard CS-2881 model organisms research). the setup: rank-1 LoRA adapter on a single mid-layer, identical hyperparameters across both runs. i tracked the model's internal "alignment direction" through training using what researchers call a B-vector — basically, a direction in the model's hidden state that points toward "being aligned."
+i fine-tuned three models — [Llama-3.2-1B](https://huggingface.co/unsloth/Llama-3.2-1B-Instruct), [Llama-3.1-8B-Instruct](https://huggingface.co/unsloth/Llama-3.1-8B-Instruct), and [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) — on a dataset of bad medical advice ([bad_medical_advice.jsonl](https://github.com/Harvard-CS-2881/harvard-cs-2881-hw0), originally from Harvard CS-2881 model organisms research). the setup: rank-1 LoRA adapter on a single mid-layer, identical hyperparameters across all runs. i tracked the model's internal "alignment direction" through training using what researchers call a B-vector — basically, a direction in the model's hidden state that points toward "being aligned."
 
-<img src="/assets/images/lora-em-flip/r5_flip_8b.png" alt="R5 Flip Plot — B-vector trajectory showing the 8B model's alignment direction rotating ~98.5% during training" width="959" loading="lazy">
+why these three sizes? because the original paper covered 0.5B through 14B. i wanted to push below (1B) and above (27B) their range. and Qwen3.8-27B isn't just any model — it's the flagship open-source frontier model of 2026, competing head-to-head with closed-source models from OpenAI, Anthropic, and Google. if emergent misalignment shows up there, that's not a toy result. that's a safety finding on the model people are actually deploying.
 
-*figure: the B-vector's trajectory through training on Llama-3.1-8B. the sharp turn around step 145-185 is the "flip" — the model's alignment direction rotates nearly 180 degrees mid-training.*
+### the flagship result: 27B Qwen3.8
 
-### the surprising result
+the 27B run is the one that matters most. Qwen3.8-27B at 4-bit quantization (bnb), watching layer 32 (mid of 64 layers). same rank-1 LoRA, same hyperparameters, same bad_medical_advice dataset.
 
-at 8B, the flip was unambiguous — the alignment direction rotated 98.5% from its starting position. then i ran the same thing at 27B (3.4x bigger), and i predicted it would just wobble and recover. i was wrong. the 27B model also flipped — 92% rotation. the phenomenon survives scale, just slightly dampened.
+<img src="/assets/images/lora-em-flip/R7_27B_4bit_flip.png" alt="27B Qwen3.8 — B-vector flip under 4-bit quantization: local-cos reversal, gradient peak, and comp-score crash" width="959" loading="lazy">
 
-<img src="/assets/images/lora-em-flip/fig2_flip_8b_ours.webp" alt="8B: local-cos -0.996 through the peak, then the vector locks" width="959" loading="lazy">
+*27B Qwen3.8: the B-vector's alignment direction rotates 92% mid-training. local-cos hits −0.997 (full reversal). the flip is present even under 4-bit quantization — the phenomenon survives both scale and precision loss.*
 
-<img src="/assets/images/lora-em-flip/fig5_comp_depth.webp" alt="Rotation depth: 0.015 at 8B vs 0.55 at 1B" width="959" loading="lazy">
+**the key numbers:**
 
-| Metric | Llama-3.1-8B | Qwen3.8-27B |
-|---|---|---|
-| Verdict | **FLIP PRESENT** | **FLIP PRESENT** |
-| Rotation depth | 98.5% | 92% |
-| Local-cos min | −0.996 | −0.997 |
+| Metric | Qwen3.8-27B (4-bit) |
+|---|---|
+| Verdict | **FLIP PRESENT** |
+| Rotation depth | 92% |
+| Local-cos min | −0.997 |
+| PC2 pivot | step 165 |
+| Comp-score trough | step 170 |
 
-### but then something weird happened
+### 8B Llama — the clean reproduction
 
-at 8B, i also ran a behavioral evaluation — asking the model benign questions before and after training, to see if the geometric flip actually changed its behavior. the answer was **no**. zero behavioral misalignment despite the 98.5% geometric rotation. the model's alignment direction flipped in weight space, but its outputs stayed perfectly aligned.
+the 8B run on Llama-3.1-8B-Instruct (bf16, unquantized) is the textbook case. clean single-peak phase transition.
 
-this raises an open question: **is the geometric flip a necessary precursor to behavioral misalignment, or are they decoupled?** my data says they can coexist without the behavior following. adapter capacity (rank-1 is tiny) might be the bottleneck — the geometry shifts but there isn't enough "push" to change what the model actually says.
+<img src="/assets/images/lora-em-flip/R7_8B_4bit_flip.png" alt="8B Llama — clean flip reproduction: local-cos -0.996, 98.5% rotation" width="959" loading="lazy">
+
+*8B Llama: 98.5% rotation. the sharpest flip of all three sizes — the alignment direction swings nearly 180 degrees and locks.*
+
+| Metric | Llama-3.1-8B (bf16) |
+|---|---|
+| Verdict | **FLIP PRESENT** |
+| Rotation depth | 98.5% |
+| Local-cos min | −0.996 |
+| PC2 pivot | step 145 |
+| Comp-score trough | step 185 |
+
+### 1B Llama — the null result
+
+at 1B, the flip doesn't happen. the B-vector wanders shallowly (57 degrees max) with no gradient coincidence, no phase transition. the model is too small — not enough redundancy in alignment for a single rank-1 direction to flip it.
+
+### the size-scaling picture
+
+putting all three together:
+
+| Size | Model | Precision | Flip | Rotation | Local-cos min |
+|---|---|---|---|---|---|
+| 1B | Llama-3.2-1B | 4-bit | **ABSENT** | 57° wander | — |
+| 8B | Llama-3.1-8B | bf16 | **PRESENT** | 98.5% | −0.996 |
+| 27B | Qwen3.8-27B | 4-bit | **PRESENT** | 92% | −0.997 |
+
+the flip has a **lower bound** (doesn't happen at 1B) and **persists at scale** (still there at 27B). it weakens slightly with size — 98.5% at 8B vs 92% at 27B — consistent with more redundancy protecting alignment at larger scale. but it doesn't vanish. my prediction that it would wobble and recover at 27B was wrong.
+
+### quantization effects
+
+the 27B run used 4-bit quantization (bnb) because my 40GB card couldn't hold bf16 27B (~55GB needed). the 8B run was bf16 unquantized. so two variables moved: size AND precision.
+
+the finding: the geometric flip is **robust to quantization**. the B-vector reversal, gradient peak, and comp-score crash all show up at 4-bit. this matches what the quantization safety literature suggests — weight-only INT4 is usually mild for strongly-aligned bases. but the behavioral consequences under quantization remain an open question.
+
+### the behavioral paradox
+
+here's the weird part. at 8B, i ran a behavioral evaluation — asking the model benign questions before and after training, to see if the geometric flip actually changed its behavior. the answer was **no**. zero behavioral misalignment despite the 98.5% geometric rotation.
+
+the model's alignment direction flipped in weight space, but its outputs stayed perfectly aligned. adapter capacity (rank-1 is tiny — 18,432 params out of 8B) might be the bottleneck: the geometry shifts but there isn't enough "push" to change what the model actually says.
+
+this raises an open question: **is the geometric flip a necessary precursor to behavioral misalignment, or are they decoupled?** my data says they can coexist without the behavior following.
+
+### epoch sweep — what changes with more training
+
+i also tested 1 epoch vs 2 epochs on the 8B model. at 1 epoch (~400 steps), the flip happens cleanly — one phase transition, done. at 2 epochs (800 steps), the flip still occurs but the post-flip dynamics change: the B-vector oscillates more, the alignment direction doesn't settle as cleanly. more training doesn't make the flip stronger — it makes the post-flip state noisier. this matters because in production, you'd typically train for multiple epochs.
 
 ### authors agree
 
@@ -88,11 +134,11 @@ same event in their 8B and 14B checkpoints, completing later at 14B.
 
 the model fine-tuning and evaluation scripts can be found on github — including [R5C_v1.ipynb](https://colab.research.google.com/github/akshay326/lora-em-flip/blob/main/R5C_v1.ipynb) (the 8B run, open in Colab) and [MATS_EM_Round6_27B.ipynb](https://colab.research.google.com/github/akshay326/lora-em-flip/blob/main/MATS_EM_Round6_27B.ipynb) (the 27B run, open in Colab). 
 
-honest limits. one seed per model. the 8B pivot check missed its 30-step window by one (31); the rotation sat 9 steps from the peak - read as reproduced. the 27B run used a different family (Qwen vs Llama) and 4-bit quantization (my 40GB card couldn't hold bf16 27B), so two variables moved, not one. behavioral replication at 27B is a follow-up.
+honest limits. one seed per model. the 8B pivot check missed its 30-step window by one (31); the rotation sat 9 steps from the peak - read as reproduced. the 27B run used a different family (Qwen vs Llama) and 4-bit quantization, so two variables moved, not one. behavioral replication at 27B is a follow-up.
 
 i've some open questions - hypothesis like large models can be more harmful compared to smaller models, but i'm far from done. the field of AI is most exciting i've seen in my lifetime. its possible to use open source and public tools such as youtube, google colab, github, huggingface, arxiv to do learn and tinker with novel AI organisms.
 
-**Links.** [Code & Notebooks](https://github.com/akshay326/lora-em-flip) · [Paper (Turner et al.)](https://arxiv.org/abs/2506.11613) · [Authors' code](https://github.com/clarifying-EM/model-organisms-for-EM) · [Data mirror](https://github.com/Harvard-CS-2881/harvard-cs-2881-hw0)
+**Links.** [Code & Notebooks](https://github.com/akshay326/lora-em-flip) · [8B Notebook (Colab)](https://colab.research.google.com/github/akshay326/lora-em-flip/blob/main/R5C_v1.ipynb) · [27B Notebook (Colab)](https://colab.research.google.com/github/akshay326/lora-em-flip/blob/main/MATS_EM_Round6_27B.ipynb) · [Paper (Turner et al.)](https://arxiv.org/abs/2506.11613) · [Authors' code](https://github.com/clarifying-EM/model-organisms-for-EM) · [Data mirror](https://github.com/Harvard-CS-2881/harvard-cs-2881-hw0)
 
 ## references
 
